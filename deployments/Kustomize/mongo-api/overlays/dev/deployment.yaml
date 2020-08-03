@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-api
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - name: mongo-api
+          env:
+            - name: ENV
+              value: "DEV"
+            - name: MONGO_ADDRESS
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-api-info
+                  key: MONGO_ADDRESS
+            - name: MONGO_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-api-info
+                  key: MONGO_USER
+            - name: MONGO_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-api-info
+                  key: MONGO_PASS
+            - name: MONGO_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-api-info
+                  key: MONGO_DATABASE
+            - name: JWT_TOKEN_HEADER
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-api-info
+                  key: JWT_TOKEN_HEADER
+            - name: JWT_REALM
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-api-info
+                  key: JWT_REALM
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-api-info
+                  key: JWT_KEY

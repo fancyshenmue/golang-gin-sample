@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: etcd-api
+  namespace: default
+  labels:
+    app: etcd-api
+spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0%
+  selector:
+    matchLabels:
+      app: etcd-api
+  template:
+    metadata:
+      labels:
+        app: etcd-api
+    spec:
+      terminationGracePeriodSeconds: 60
+      containers:
+        - name: etcd-api
+          image: gcr.io/golang-gin-sample/etcd-api
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 1
+            successThreshold: 2
+            failureThreshold: 3
+          ports:
+            - containerPort: 8080
+              name: app
+              protocol: "TCP"
+          resources:
+            requests:
+              cpu: "1"
+              memory: "128Mi"
+            limits:
+              cpu: "1"
+              memory: "256Mi"

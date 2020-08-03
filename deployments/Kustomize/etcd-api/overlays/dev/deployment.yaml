@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: etcd-api
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - name: etcd-api
+          env:
+            - name: ENV
+              value: "DEV"
+            - name: ETCD_CONNECT_INFO
+              value: "http://etcd01.sample.com:2379,http://etcd02.sample.com:2379,http://etcd03.sample.com:2379"
+            - name: MONGO_ADDRESS
+              valueFrom:
+                secretKeyRef:
+                  name: etcd-api-info
+                  key: MONGO_ADDRESS
+            - name: MONGO_USER
+              valueFrom:
+                secretKeyRef:
+                  name: etcd-api-info
+                  key: MONGO_USER
+            - name: MONGO_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: etcd-api-info
+                  key: MONGO_PASS
+            - name: MONGO_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: etcd-api-info
+                  key: MONGO_DATABASE
+            - name: JWT_TOKEN_HEADER
+              valueFrom:
+                secretKeyRef:
+                  name: etcd-api-info
+                  key: JWT_TOKEN_HEADER
+            - name: JWT_REALM
+              valueFrom:
+                secretKeyRef:
+                  name: etcd-api-info
+                  key: JWT_REALM
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: etcd-api-info
+                  key: JWT_KEY

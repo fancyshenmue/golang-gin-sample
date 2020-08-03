@@ -1,0 +1,64 @@
+version: '3.7'
+
+services:
+  mongo:
+    container_name: mongo
+    image: mongo
+    restart: always
+    ports:
+      - ${MONGO_DB_PORT}:27017
+    volumes:
+      - ${MONGO_MOUNT_VOLUME}:/data/db
+    command: [--auth]
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
+    networks:
+      - local-dev
+
+  mongo-express:
+    container_name: mongo-express
+    image: mongo-express
+    restart: always
+    ports:
+      - ${MONGO_EXPRESS_PORT}:8081
+    environment:
+      - ME_CONFIG_BASICAUTH_USERNAME=${MONGO_ROOT_USERNAME}
+      - ME_CONFIG_BASICAUTH_PASSWORD=${MONGO_ROOT_PASSWORD}
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=${MONGO_ROOT_USERNAME}
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=${MONGO_ROOT_PASSWORD}
+    depends_on:
+      - mongo
+    networks:
+      - local-dev
+
+  etcd:
+    container_name: etcd
+    image: bitnami/etcd:3.3.11
+    environment:
+      - ALLOW_NONE_AUTHENTICATION=yes
+      - ETCD_ADVERTISE_CLIENT_URLS=http://etcd:2379
+    ports:
+      - ${ETCD_CLIENT_PORT}:2379
+      - ${ETCD_PEER_PORT}:2380
+    volumes:
+      - ${ETCD_MOUNT_VOLUME}:/opt/bitnami/etcd/data
+    networks:
+      - local-dev
+
+  postgres:
+    container_name: postgres
+    image: postgres:11.6
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_ADMNIN_PASSWORD}
+      - PGDATA=${POSTGRES_PGDATA}
+    ports:
+      - ${POSTGRES_PORT}:5432
+    volumes:
+      - ${POSTGRES_MOUNT_VOLUME}:${POSTGRES_PGDATA}
+    networks:
+      - local-dev
+
+networks:
+  local-dev:

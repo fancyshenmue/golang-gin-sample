@@ -1,0 +1,7 @@
+commonLabels:
+  app: "mongo-api"
+
+resources:
+  - deployment.yaml
+  - service.yaml
+  - ingress.yaml

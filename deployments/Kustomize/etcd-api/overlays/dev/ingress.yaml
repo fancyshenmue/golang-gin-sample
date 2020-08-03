@@ -1,0 +1,13 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: etcd-api
+spec:
+  rules:
+  - host: dev-etcd-api.sample.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: etcd-api
+          servicePort: 80

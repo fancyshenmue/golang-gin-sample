@@ -1,0 +1,12 @@
+namespace: dev
+
+commonLabels:
+  app: dev-etcd-api
+
+resources:
+- ../../base
+
+patchesStrategicMerge:
+- deployment.yaml
+- service.yaml
+- ingress.yaml

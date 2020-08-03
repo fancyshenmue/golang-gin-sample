@@ -1,0 +1,12 @@
+namespace: dev
+
+commonLabels:
+  app: dev-mongo-api
+
+resources:
+- ../../base
+
+patchesStrategicMerge:
+- deployment.yaml
+- service.yaml
+- ingress.yaml

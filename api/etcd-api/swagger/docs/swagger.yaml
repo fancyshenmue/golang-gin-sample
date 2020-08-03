@@ -1,0 +1,124 @@
+basePath: /
+definitions:
+  api.DeleteETCdKeyTop:
+    properties:
+      key:
+        type: string
+    type: object
+  api.GetETCdKeyTop:
+    properties:
+      key:
+        type: string
+    type: object
+  api.GetETCdKeyWithPrefixTop:
+    properties:
+      prefix:
+        type: string
+    type: object
+  api.PutETCdKeyTop:
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: fancyshenmue@gmail.com
+    name: Charles Hsu
+  description: ETCD RESTful API
+  license: {}
+  termsOfService: http://swagger.io/terms/
+  title: ETCD RESTful API
+  version: "1.0"
+paths:
+  /api/v1/deleteKey:
+    delete:
+      consumes:
+      - application/json
+      operationId: "1"
+      parameters:
+      - description: body
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/api.DeleteETCdKeyTop'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete Key
+      tags:
+      - Delete Key
+  /api/v1/getKey:
+    post:
+      consumes:
+      - application/json
+      operationId: "1"
+      parameters:
+      - description: body
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/api.GetETCdKeyTop'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Get Key
+      tags:
+      - GET Key
+  /api/v1/getKeyWithPrefix:
+    post:
+      consumes:
+      - application/json
+      operationId: "1"
+      parameters:
+      - description: body
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/api.GetETCdKeyWithPrefixTop'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Get Get Key With Prefix
+      tags:
+      - GET Key
+  /api/v1/putKey:
+    post:
+      consumes:
+      - application/json
+      operationId: "1"
+      parameters:
+      - description: body
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/api.PutETCdKeyTop'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Put Key
+      tags:
+      - Put Key
+swagger: "2.0"

@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+  name: cdn-api
+  namespace: default
+  labels:
+    app: cdn-api
+spec:
+  rules:
+  - host: cdn-api.sample.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: cdn-api
+          servicePort: 80

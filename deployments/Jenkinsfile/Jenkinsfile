@@ -1,0 +1,157 @@
+properties([
+  buildDiscarder(
+      logRotator(
+          numToKeepStr: '30'
+      )
+  )
+])
+
+pipeline {
+  agent any
+
+  parameters {
+    string(name: 'BRANCH',
+      defaultValue: 'master',
+      description: 'GIT BRANCH'
+    )
+    string(name: 'REVISION',
+      defaultValue: 'master',
+      description: 'GIT REVISION'
+    )
+    choice(name: 'APP_NAME',
+      choices: ['NOTSUPPORT', 'cdn-api', 'etcd-api', 'mongo-api'],
+      description: 'CHOOSE APP_NAME'
+    )
+    choice(name: 'ACTION',
+      choices: ['NOTSUPPORT', 'build-image', 'push-image', 'deploy', 'remove'],
+      description: 'CHOOSE ACTION'
+    )
+    choice(name: 'ENVIRONMENT',
+      choices: ["NOTSUPPORT", "dev", "stg", "uat", "prod"],
+      description: 'CHOOSE ENVIRONMENT'
+    )
+  }
+
+  environment {
+    // define git repo info
+    GIT_REPO                  = "git@github.com:fancyshenmue/golang-gin-sample.git"
+    BRANCH                    = "${params.BRANCH}"
+    REVISION                  = "${params.REVISION}"
+    // define environment
+    ENVIRONMENT               = "${params.ENVIRONMENT}"
+    ENV_APP_NAME              = "${params.APP_NAME}"
+    // define action
+    ACTION                    = "${params.ACTION}"
+    // define workspace
+    WORKSPACE_DIR             = "${WORKSPACE}/${BUILD_ID}"
+    ENV_APP_BUILD_DIR         = "${WORKSPACE_DIR}/cmd/${params.APP_NAME}"
+    ENV_DOCKER_BUILD_DIR      = "${WORKSPACE_DIR}/build/Docker/${params.APP_NAME}"
+    ENV_KUSTOMIZE_DIR         = "${WORKSPACE_DIR}/deployments/Kustomize/${params.APP_NAME}/overlays/${params.ENVIRONMENT}"
+    // define docker info
+    DOCKER_REGISTER           = "https://gcr.io"
+    ENV_DOCKER_IMAGE_TAG_ROOT = "gcr.io/golang-gin-sample"
+    ENV_DOCKER_IMAGE_TAG      = "${ENV_DOCKER_IMAGE_TAG_ROOT}/${params.APP_NAME}"
+    // add path
+    PATH                      = "${env.PATH}:/usr/local/bin:${env.HOME}/bin"
+    // define golang version
+    ENV_GO_VERSION            = "go1.14.3"
+  }
+
+  stages {
+    // setup environment
+    stage('Setup Environment') {
+      steps {
+        // block if selected ENVIRONMENT not supported
+        script {
+          if (params.ENVIRONMENT == "NOTSUPPORT") {
+              error('ENVIRONMENT not supported')
+          }
+        }
+
+        // block if selected ACTION not supported
+        script {
+          if (params.ACTION == "NOTSUPPORT") {
+              error('ACTION not supported')
+          }
+        }
+
+        // block if selected APP_NAME not supported
+        script {
+          if (params.APP_NAME == "NOTSUPPORT") {
+            error('APP_NAME not supported')
+          }
+        }
+
+        // utilities version check
+        sh("kubectl version --client --short")
+        sh("kustomize version --short")
+        sh("helm version --client --short")
+
+        // ensure credentials for docker login is prepared
+        withCredentials([
+          usernamePassword(
+            credentialsId: 'docker-credentials',
+            passwordVariable: 'USER_PASSWORD',
+            usernameVariable: 'USER_ID'
+          )
+        ]) {
+          sh("docker version")
+          sh("docker login -u ${USER_ID} -p ${USER_PASSWORD} ${DOCKER_REGISTER}")
+        }
+
+        // git repo info
+        sh("echo Git Repo: ${GIT_REPO}")
+        sh("echo Branch: ${BRANCH}")
+        sh("echo Revision: ${REVISION}")
+        // environment
+        sh("echo Environment: ${ENVIRONMENT}")
+        sh("echo APP name: ${APP_NAME}")
+        // action
+        sh("echo Action: ${ACTION}")
+        // workspace
+        sh("echo Workspace: ${WORKSPACE_DIR}")
+        sh("echo Application Build Directory: ${ENV_APP_BUILD_DIR}")
+        sh("echo Docker Build Directory: ${ENV_DOCKER_BUILD_DIR}")
+        sh("echo Kustomize Build Directory: ${ENV_KUSTOMIZE_DIR}")
+        // docker info
+        sh("echo Docker Register: ${DOCKER_REGISTER}")
+        sh("echo Docker Image Tag Root: ${ENV_DOCKER_IMAGE_TAG_ROOT}")
+        sh("echo Docker Image Tag: ${ENV_DOCKER_IMAGE_TAG}")
+        // path
+        sh("echo Path: ${PATH}")
+        // golang version
+        sh("echo Go Version: ${ENV_GO_VERSION}")
+      }
+    } // end of setup environment
+
+    // git checkout
+    stage('Git checkout') {
+      steps {
+        dir(WORKSPACE_DIR) {
+          git url: "${GIT_REPO}",
+              credentialsId: 'gitlab',
+              branch: "${BRANCH}"
+        }
+
+        sh("git checkout ${REVISION}")
+      }
+    } // end of stage
+
+    // build && deploy
+    stage('Build') {
+      steps {
+        dir(WORKSPACE_DIR) {
+          sh("make ${ACTION}")
+        }
+      }
+    }
+
+    stage('Cleanup') {
+      steps {
+        dir(WORKSPACE_DIR) {
+          deleteDir()
+        }
+      }
+    }
+  }
+}

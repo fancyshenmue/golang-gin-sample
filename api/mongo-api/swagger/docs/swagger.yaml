@@ -1,0 +1,195 @@
+basePath: /
+definitions:
+  api.MongoDeleteSingleDocumentBodyTop:
+    properties:
+      name:
+        type: string
+    type: object
+  api.MongoGetBodyTop:
+    properties:
+      collection:
+        type: string
+      findData:
+        type: string
+      findField:
+        type: string
+    type: object
+  api.MongoInsertManyDocumentBodyTop:
+    items:
+      $ref: '#/definitions/api.MongoInsertSingleDocumentBodyTop'
+    type: array
+  api.MongoInsertSingleDocumentBodyTop:
+    type: object
+  api.MongoUpdateSingleDocumentBodyTop:
+    properties:
+      field:
+        type: string
+      info:
+        type: object
+      name:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: fancyshenmue@gmail.com
+    name: Charles Hsu
+  description: Mongo RESTful API
+  license: {}
+  termsOfService: http://swagger.io/terms/
+  title: Mongo RESTful API
+  version: "1.0"
+paths:
+  /api/v1/deleteSingleDocument/{collection}:
+    delete:
+      consumes:
+      - application/json
+      operationId: "1"
+      parameters:
+      - description: collection
+        in: path
+        name: collection
+        required: true
+        type: string
+      - description: body
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/api.MongoDeleteSingleDocumentBodyTop'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete Single Document
+      tags:
+      - Delete Data
+  /api/v1/getDocument:
+    post:
+      consumes:
+      - application/json
+      operationId: "1"
+      parameters:
+      - description: body
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/api.MongoGetBodyTop'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Get Document
+      tags:
+      - Get Info
+  /api/v1/getDocumentRegex:
+    post:
+      consumes:
+      - application/json
+      operationId: "1"
+      parameters:
+      - description: body
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/api.MongoGetBodyTop'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Get Document Regex
+      tags:
+      - Get Info
+  /api/v1/insertManyDocument/{collection}:
+    post:
+      consumes:
+      - application/json
+      operationId: "1"
+      parameters:
+      - description: collection
+        in: path
+        name: collection
+        required: true
+        type: string
+      - description: body
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/api.MongoInsertManyDocumentBodyTop'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Insert Many Document
+      tags:
+      - Insert Data
+  /api/v1/insertSingleDocument/{collection}:
+    post:
+      consumes:
+      - application/json
+      operationId: "1"
+      parameters:
+      - description: collection
+        in: path
+        name: collection
+        required: true
+        type: string
+      - description: body
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/api.MongoInsertSingleDocumentBodyTop'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Insert Single Document
+      tags:
+      - Insert Data
+  /api/v1/updateSingleDocument/{collection}:
+    put:
+      consumes:
+      - application/json
+      operationId: "1"
+      parameters:
+      - description: collection
+        in: path
+        name: collection
+        required: true
+        type: string
+      - description: body
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/api.MongoUpdateSingleDocumentBodyTop'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Update Single Document
+      tags:
+      - Update Data
+swagger: "2.0"

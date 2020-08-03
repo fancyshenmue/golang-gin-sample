@@ -1,0 +1,668 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "CDN RESTful API",
+        "title": "CDN RESTful API",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "Charles Hsu",
+            "email": "fancyshenmue@gmail.com"
+        },
+        "license": {},
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "paths": {
+        "/api/v1/cloudflare/account/details": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Cloudfalre (Account)"
+                ],
+                "summary": "Cloudflare Account Details",
+                "operationId": "1",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.CloudflareAccountDetailRequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/cloudflare/account/list/accounts": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Cloudfalre (Account)"
+                ],
+                "summary": "Cloudflare Account List Accounts",
+                "operationId": "1",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.CloudflareAccountListAccountsRequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/cloudflare/zone/list/zones": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Cloudfalre (Zones)"
+                ],
+                "summary": "Cloudflare Zone List Zones",
+                "operationId": "1",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/cloudflare/zone/purge/all/files": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Cloudfalre (Zones)"
+                ],
+                "summary": "Cloudflare Zone Purge All Files",
+                "operationId": "1",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.CloudflareZonePurgeRequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/cloudflare/zone/purge/files/by/url": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Cloudfalre (Zones)"
+                ],
+                "summary": "Cloudflare Zone Purge Files by URL",
+                "operationId": "1",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.CloudflareZonePurgeRequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/greycdn/cache/purge/by-site": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "GreyCDN (Cache)"
+                ],
+                "summary": "Grey CDN Cache Purge By Site",
+                "operationId": "1",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.GreyCDNCacheBySiteRequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/greycdn/cache/purge/by-site-uri": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "GreyCDN (Cache)"
+                ],
+                "summary": "Grey CDN Cache Purge By Site URI",
+                "operationId": "1",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.GreyCDNCacheBySiteURIRequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/greycdn/site/list/all": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "GreyCDN (Site Info)"
+                ],
+                "summary": "Grey CDN Site List All",
+                "operationId": "1",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/verizon/edge/cache/purge/content": {
+            "put": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Verizon Cache"
+                ],
+                "summary": "Verizon Edge Cache Purge Content",
+                "operationId": "1",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.VerizoneCDNCachePurgeContentRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/verizon/edge/cnames/add": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Verizon CDN (CNAME)"
+                ],
+                "summary": "Verizon Edge CNAME Add",
+                "operationId": "1",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.VerizoneCDNCnameAddEdgeCNAMEsRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/verizon/edge/cnames/delete/{cnameid}": {
+            "delete": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Verizon CDN (CNAME)"
+                ],
+                "summary": "Verizon Edge CNAME Delete",
+                "operationId": "1",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "cnameid",
+                        "name": "cnameid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/verizon/edge/cnames/get/{cnameid}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Verizon CDN (CNAME)"
+                ],
+                "summary": "Verizon Edge CNAME Get",
+                "operationId": "1",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "cnameid",
+                        "name": "cnameid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/verizon/edge/cnames/list/httpLarge": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Verizon CDN (CNAME)"
+                ],
+                "summary": "Verizon Edge CNAME List HTTP Large",
+                "operationId": "1",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/verizon/edge/customer/origins/add/httpLarge": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Verizon Customer Oringins"
+                ],
+                "summary": "Verizon Edge Customer Origin Add HTTP Large",
+                "operationId": "1",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.VerizoneCDNCustomerOriginAddHTTPLargeRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/verizon/edge/customer/origins/delete/{originid}": {
+            "delete": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Verizon Customer Oringins"
+                ],
+                "summary": "Verizon Edge Customer Origin Delete",
+                "operationId": "1",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "originid",
+                        "name": "originid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/verizon/edge/customer/origins/get/{originid}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Verizon Customer Oringins"
+                ],
+                "summary": "Verizon Edge Customer Origin Get",
+                "operationId": "1",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "originid",
+                        "name": "originid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "api.CloudflareAccountDetailRequestBody": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                }
+            }
+        },
+        "api.CloudflareAccountListAccountsRequestBody": {
+            "type": "object",
+            "properties": {
+                "direction": {
+                    "type": "string"
+                },
+                "page": {
+                    "type": "string"
+                },
+                "per_page": {
+                    "type": "string"
+                }
+            }
+        },
+        "api.CloudflareZonePurgeRequestBody": {
+            "type": "object",
+            "properties": {
+                "path": {
+                    "type": "string"
+                }
+            }
+        },
+        "api.GreyCDNCacheBySiteRequestBody": {
+            "type": "object",
+            "properties": {
+                "uid": {
+                    "type": "string"
+                }
+            }
+        },
+        "api.GreyCDNCacheBySiteURIRequestBody": {
+            "type": "object",
+            "properties": {
+                "uid": {
+                    "type": "string"
+                },
+                "uri": {
+                    "type": "string"
+                }
+            }
+        },
+        "api.VerizoneCDNCachePurgeContentRequest": {
+            "type": "object",
+            "required": [
+                "MediaPath"
+            ],
+            "properties": {
+                "MediaPath": {
+                    "type": "string"
+                },
+                "MediaType": {
+                    "type": "integer"
+                }
+            }
+        },
+        "api.VerizoneCDNCnameAddEdgeCNAMEsRequest": {
+            "type": "object",
+            "required": [
+                "Name"
+            ],
+            "properties": {
+                "DirPath": {
+                    "type": "string"
+                },
+                "EnableCustomReports": {
+                    "type": "integer"
+                },
+                "MediaTypeId": {
+                    "type": "integer"
+                },
+                "Name": {
+                    "type": "string"
+                },
+                "OriginId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "api.VerizoneCDNCustomerOriginAddHTTPLargeRequest": {
+            "type": "object",
+            "required": [
+                "DirectoryName",
+                "HostHeader",
+                "HttpHostnames",
+                "HttpLoadBalancing",
+                "HttpsHostnames",
+                "HttpsLoadBalancing"
+            ],
+            "properties": {
+                "DirectoryName": {
+                    "type": "string"
+                },
+                "HostHeader": {
+                    "type": "string"
+                },
+                "HttpHostnames": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/api.VerizoneCDNCustomerOriginAddHTTPLargeRequestHTTPHostname"
+                    }
+                },
+                "HttpLoadBalancing": {
+                    "type": "string"
+                },
+                "HttpsHostnames": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/api.VerizoneCDNCustomerOriginAddHTTPLargeRequestHTTPHostname"
+                    }
+                },
+                "HttpsLoadBalancing": {
+                    "type": "string"
+                },
+                "ShieldPOPs": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/api.VerizoneCDNCustomerOriginAddHTTPLargeRequestShieldPOP"
+                    }
+                }
+            }
+        },
+        "api.VerizoneCDNCustomerOriginAddHTTPLargeRequestHTTPHostname": {
+            "type": "object",
+            "properties": {
+                "Name": {
+                    "type": "string"
+                }
+            }
+        },
+        "api.VerizoneCDNCustomerOriginAddHTTPLargeRequestShieldPOP": {
+            "type": "object",
+            "properties": {
+                "POPCode": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

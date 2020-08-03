@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cdn-api
+  namespace: default
+  labels:
+    app: cdn-api
+spec:
+  type: ClusterIP
+  selector:
+    app: cdn-api
+  ports:
+    - port: 80
+      targetPort: 8080
+      protocol: TCP

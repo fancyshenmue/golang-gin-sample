@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-api
+  namespace: default
+  labels:
+    app: mongo-api
+spec:
+  type: ClusterIP
+  selector:
+    app: mongo-api
+  ports:
+    - port: 80
+      targetPort: 8080
+      protocol: TCP

@@ -1,0 +1,436 @@
+basePath: /
+definitions:
+  api.CloudflareAccountDetailRequestBody:
+    properties:
+      id:
+        type: string
+    type: object
+  api.CloudflareAccountListAccountsRequestBody:
+    properties:
+      direction:
+        type: string
+      page:
+        type: string
+      per_page:
+        type: string
+    type: object
+  api.CloudflareZonePurgeRequestBody:
+    properties:
+      path:
+        type: string
+    type: object
+  api.GreyCDNCacheBySiteRequestBody:
+    properties:
+      uid:
+        type: string
+    type: object
+  api.GreyCDNCacheBySiteURIRequestBody:
+    properties:
+      uid:
+        type: string
+      uri:
+        type: string
+    type: object
+  api.VerizoneCDNCachePurgeContentRequest:
+    properties:
+      MediaPath:
+        type: string
+      MediaType:
+        type: integer
+    required:
+    - MediaPath
+    type: object
+  api.VerizoneCDNCnameAddEdgeCNAMEsRequest:
+    properties:
+      DirPath:
+        type: string
+      EnableCustomReports:
+        type: integer
+      MediaTypeId:
+        type: integer
+      Name:
+        type: string
+      OriginId:
+        type: integer
+    required:
+    - Name
+    type: object
+  api.VerizoneCDNCustomerOriginAddHTTPLargeRequest:
+    properties:
+      DirectoryName:
+        type: string
+      HostHeader:
+        type: string
+      HttpHostnames:
+        items:
+          $ref: '#/definitions/api.VerizoneCDNCustomerOriginAddHTTPLargeRequestHTTPHostname'
+        type: array
+      HttpLoadBalancing:
+        type: string
+      HttpsHostnames:
+        items:
+          $ref: '#/definitions/api.VerizoneCDNCustomerOriginAddHTTPLargeRequestHTTPHostname'
+        type: array
+      HttpsLoadBalancing:
+        type: string
+      ShieldPOPs:
+        items:
+          $ref: '#/definitions/api.VerizoneCDNCustomerOriginAddHTTPLargeRequestShieldPOP'
+        type: array
+    required:
+    - DirectoryName
+    - HostHeader
+    - HttpHostnames
+    - HttpLoadBalancing
+    - HttpsHostnames
+    - HttpsLoadBalancing
+    type: object
+  api.VerizoneCDNCustomerOriginAddHTTPLargeRequestHTTPHostname:
+    properties:
+      Name:
+        type: string
+    type: object
+  api.VerizoneCDNCustomerOriginAddHTTPLargeRequestShieldPOP:
+    properties:
+      POPCode:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: fancyshenmue@gmail.com
+    name: Charles Hsu
+  description: CDN RESTful API
+  license: {}
+  termsOfService: http://swagger.io/terms/
+  title: CDN RESTful API
+  version: "1.0"
+paths:
+  /api/v1/cloudflare/account/details:
+    post:
+      consumes:
+      - application/json
+      operationId: "1"
+      parameters:
+      - description: body
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/api.CloudflareAccountDetailRequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Cloudflare Account Details
+      tags:
+      - Cloudfalre (Account)
+  /api/v1/cloudflare/account/list/accounts:
+    post:
+      consumes:
+      - application/json
+      operationId: "1"
+      parameters:
+      - description: body
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/api.CloudflareAccountListAccountsRequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Cloudflare Account List Accounts
+      tags:
+      - Cloudfalre (Account)
+  /api/v1/cloudflare/zone/list/zones:
+    post:
+      consumes:
+      - application/json
+      operationId: "1"
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Cloudflare Zone List Zones
+      tags:
+      - Cloudfalre (Zones)
+  /api/v1/cloudflare/zone/purge/all/files:
+    post:
+      consumes:
+      - application/json
+      operationId: "1"
+      parameters:
+      - description: body
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/api.CloudflareZonePurgeRequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Cloudflare Zone Purge All Files
+      tags:
+      - Cloudfalre (Zones)
+  /api/v1/cloudflare/zone/purge/files/by/url:
+    post:
+      consumes:
+      - application/json
+      operationId: "1"
+      parameters:
+      - description: body
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/api.CloudflareZonePurgeRequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Cloudflare Zone Purge Files by URL
+      tags:
+      - Cloudfalre (Zones)
+  /api/v1/greycdn/cache/purge/by-site:
+    post:
+      consumes:
+      - application/json
+      operationId: "1"
+      parameters:
+      - description: body
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/api.GreyCDNCacheBySiteRequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Grey CDN Cache Purge By Site
+      tags:
+      - GreyCDN (Cache)
+  /api/v1/greycdn/cache/purge/by-site-uri:
+    post:
+      consumes:
+      - application/json
+      operationId: "1"
+      parameters:
+      - description: body
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/api.GreyCDNCacheBySiteURIRequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Grey CDN Cache Purge By Site URI
+      tags:
+      - GreyCDN (Cache)
+  /api/v1/greycdn/site/list/all:
+    get:
+      consumes:
+      - application/json
+      operationId: "1"
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Grey CDN Site List All
+      tags:
+      - GreyCDN (Site Info)
+  /api/v1/verizon/edge/cache/purge/content:
+    put:
+      consumes:
+      - application/json
+      operationId: "1"
+      parameters:
+      - description: body
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/api.VerizoneCDNCachePurgeContentRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Verizon Edge Cache Purge Content
+      tags:
+      - Verizon Cache
+  /api/v1/verizon/edge/cnames/add:
+    post:
+      consumes:
+      - application/json
+      operationId: "1"
+      parameters:
+      - description: body
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/api.VerizoneCDNCnameAddEdgeCNAMEsRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Verizon Edge CNAME Add
+      tags:
+      - Verizon CDN (CNAME)
+  /api/v1/verizon/edge/cnames/delete/{cnameid}:
+    delete:
+      consumes:
+      - application/json
+      operationId: "1"
+      parameters:
+      - description: cnameid
+        in: path
+        name: cnameid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Verizon Edge CNAME Delete
+      tags:
+      - Verizon CDN (CNAME)
+  /api/v1/verizon/edge/cnames/get/{cnameid}:
+    get:
+      consumes:
+      - application/json
+      operationId: "1"
+      parameters:
+      - description: cnameid
+        in: path
+        name: cnameid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Verizon Edge CNAME Get
+      tags:
+      - Verizon CDN (CNAME)
+  /api/v1/verizon/edge/cnames/list/httpLarge:
+    get:
+      consumes:
+      - application/json
+      operationId: "1"
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Verizon Edge CNAME List HTTP Large
+      tags:
+      - Verizon CDN (CNAME)
+  /api/v1/verizon/edge/customer/origins/add/httpLarge:
+    post:
+      consumes:
+      - application/json
+      operationId: "1"
+      parameters:
+      - description: body
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/api.VerizoneCDNCustomerOriginAddHTTPLargeRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Verizon Edge Customer Origin Add HTTP Large
+      tags:
+      - Verizon Customer Oringins
+  /api/v1/verizon/edge/customer/origins/delete/{originid}:
+    delete:
+      consumes:
+      - application/json
+      operationId: "1"
+      parameters:
+      - description: originid
+        in: path
+        name: originid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Verizon Edge Customer Origin Delete
+      tags:
+      - Verizon Customer Oringins
+  /api/v1/verizon/edge/customer/origins/get/{originid}:
+    get:
+      consumes:
+      - application/json
+      operationId: "1"
+      parameters:
+      - description: originid
+        in: path
+        name: originid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Verizon Edge Customer Origin Get
+      tags:
+      - Verizon Customer Oringins
+swagger: "2.0"
