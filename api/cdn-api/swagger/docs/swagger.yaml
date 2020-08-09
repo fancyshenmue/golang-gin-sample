@@ -14,10 +14,121 @@ definitions:
       per_page:
         type: string
     type: object
+  api.CloudflareDNSCreateDNSRecordRequestBody:
+    properties:
+      auth_key:
+        type: string
+      content:
+        type: string
+      priority:
+        type: integer
+      proxied:
+        type: boolean
+      record_name:
+        type: string
+      ttl:
+        type: integer
+      type:
+        type: string
+      user:
+        type: string
+      zone_name:
+        type: string
+    required:
+    - auth_key
+    - content
+    - proxied
+    - record_name
+    - type
+    - user
+    - zone_name
+    type: object
+  api.CloudflareDNSDeleteDNSRecordRequestBody:
+    properties:
+      auth_key:
+        type: string
+      record_name:
+        type: string
+      user:
+        type: string
+    required:
+    - auth_key
+    - record_name
+    - user
+    type: object
+  api.CloudflareDNSListDNSRecordsRequestBody:
+    properties:
+      auth_key:
+        type: string
+      name:
+        type: string
+      user:
+        type: string
+    required:
+    - auth_key
+    - name
+    - user
+    type: object
+  api.CloudflareDNSRecordDetailRequestBody:
+    properties:
+      auth_key:
+        type: string
+      record_name:
+        type: string
+      user:
+        type: string
+    required:
+    - auth_key
+    - record_name
+    - user
+    type: object
+  api.CloudflareZoneCreateZoneRequestBody:
+    properties:
+      auth_key:
+        type: string
+      jump_start:
+        type: boolean
+      name:
+        type: string
+      type:
+        type: string
+      user:
+        type: string
+    required:
+    - auth_key
+    - name
+    - user
+    type: object
+  api.CloudflareZoneDeleteZoneRequestBody:
+    properties:
+      auth_key:
+        type: string
+      name:
+        type: string
+      user:
+        type: string
+    required:
+    - auth_key
+    - name
+    - user
+    type: object
   api.CloudflareZonePurgeRequestBody:
     properties:
       path:
         type: string
+    type: object
+  api.CloudflareZoneZoneDetailRequestBody:
+    properties:
+      auth_key:
+        type: string
+      name:
+        type: string
+      user:
+        type: string
+    required:
+    - auth_key
+    - name
+    - user
     type: object
   api.GreyCDNCacheBySiteRequestBody:
     properties:
@@ -150,6 +261,160 @@ paths:
       summary: Cloudflare Account List Accounts
       tags:
       - Cloudfalre (Account)
+  /api/v1/cloudflare/dns/create/record:
+    post:
+      consumes:
+      - application/json
+      operationId: "1"
+      parameters:
+      - description: body
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/api.CloudflareDNSCreateDNSRecordRequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Cloudflare DNS Create Record
+      tags:
+      - Cloudfalre (DNS)
+  /api/v1/cloudflare/dns/delete/record:
+    post:
+      consumes:
+      - application/json
+      operationId: "1"
+      parameters:
+      - description: body
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/api.CloudflareDNSDeleteDNSRecordRequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Cloudflare DNS Delete DNS Record
+      tags:
+      - Cloudfalre (DNS)
+  /api/v1/cloudflare/dns/list/records:
+    post:
+      consumes:
+      - application/json
+      operationId: "1"
+      parameters:
+      - description: body
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/api.CloudflareDNSListDNSRecordsRequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Cloudflare DNS List DNS Records
+      tags:
+      - Cloudfalre (DNS)
+  /api/v1/cloudflare/dns/record/detail:
+    post:
+      consumes:
+      - application/json
+      operationId: "1"
+      parameters:
+      - description: body
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/api.CloudflareDNSRecordDetailRequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Cloudflare DNS Record Detail
+      tags:
+      - Cloudfalre (DNS)
+  /api/v1/cloudflare/zone/create:
+    post:
+      consumes:
+      - application/json
+      operationId: "1"
+      parameters:
+      - description: body
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/api.CloudflareZoneCreateZoneRequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Cloudflare Zone Create Zone
+      tags:
+      - Cloudfalre (Zones)
+  /api/v1/cloudflare/zone/delete:
+    post:
+      consumes:
+      - application/json
+      operationId: "1"
+      parameters:
+      - description: body
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/api.CloudflareZoneDeleteZoneRequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Cloudflare Zone Delete Zone
+      tags:
+      - Cloudfalre (Zones)
+  /api/v1/cloudflare/zone/details:
+    post:
+      consumes:
+      - application/json
+      operationId: "1"
+      parameters:
+      - description: body
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/api.CloudflareZoneZoneDetailRequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Cloudflare Zone Zone Detail
+      tags:
+      - Cloudfalre (Zones)
   /api/v1/cloudflare/zone/list/zones:
     post:
       consumes:

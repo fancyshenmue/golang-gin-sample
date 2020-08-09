@@ -121,6 +121,18 @@ var (
 				"url":    fmt.Sprintf("%s%s", cloudflareAPIURLRoot, "/client/v4/zones"),
 				"method": "GET",
 			},
+			"createZone": map[string]string{
+				"url":    fmt.Sprintf("%s%s", cloudflareAPIURLRoot, "/client/v4/zones"),
+				"method": "POST",
+			},
+			"zoneDetails": map[string]string{
+				"url":    fmt.Sprintf("%s%s", cloudflareAPIURLRoot, "/client/v4/zones"),
+				"method": "GET",
+			},
+			"deleteZone": map[string]string{
+				"url":    fmt.Sprintf("%s%s", cloudflareAPIURLRoot, "/client/v4/zones"),
+				"method": "DELETE",
+			},
 			"purgeAllFiles": map[string]string{
 				"url":    fmt.Sprintf("%s%s", cloudflareAPIURLRoot, "/client/v4/zones"),
 				"method": "POST",
@@ -149,7 +161,65 @@ type CloudflareAccountDetailRequestBody struct {
 
 /* end of cloudflare account */
 
+/* cloudflare dns */
+
+type CloudflareDNSListDNSRecordsRequestBody struct {
+	User     string `json:"user" binding:"required"`
+	AuthKey  string `json:"auth_key" binding:"required"`
+	ZoneName string `json:"name" binding:"required"`
+}
+
+type CloudflareDNSCreateDNSRecordRequestBody struct {
+	User          string `json:"user" binding:"required"`
+	AuthKey       string `json:"auth_key" binding:"required"`
+	ZoneName      string `json:"zone_name" binding:"required"`
+	RecordName    string `json:"record_name" binding:"required"`
+	RecordType    string `json:"type" binding:"required"`
+	RecordContent string `json:"content" binding:"required"`
+	TTL           int    `json:"ttl"`
+	Priority      int    `json:"priority,omitempty"`
+	Proxied       bool   `json:"proxied" binding:"required"`
+}
+
+type CloudflareDNSRecordDetailRequestBody struct {
+	User       string `json:"user" binding:"required"`
+	AuthKey    string `json:"auth_key" binding:"required"`
+	RecordName string `json:"record_name" binding:"required"`
+}
+
+type CloudflareDNSDeleteDNSRecordRequestBody struct {
+	User       string `json:"user" binding:"required"`
+	AuthKey    string `json:"auth_key" binding:"required"`
+	RecordName string `json:"record_name" binding:"required"`
+}
+
+/* end of cloudflare dns */
+
 /* cloudflare zone */
+
+type CloudflareZoneCreateZoneRequestBody struct {
+	User      string `json:"user" binding:"required"`
+	AuthKey   string `json:"auth_key" binding:"required"`
+	Name      string `json:"name" binding:"required"`
+	JumpStart bool   `json:"jump_start"`
+	Type      string `json:"type"`
+}
+
+type CloudflareZoneCreateZoneAccount struct {
+	ID string `json:"id"`
+}
+
+type CloudflareZoneZoneDetailRequestBody struct {
+	User     string `json:"user" binding:"required"`
+	AuthKey  string `json:"auth_key" binding:"required"`
+	ZoneName string `json:"name" binding:"required"`
+}
+
+type CloudflareZoneDeleteZoneRequestBody struct {
+	User     string `json:"user" binding:"required"`
+	AuthKey  string `json:"auth_key" binding:"required"`
+	ZoneName string `json:"name" binding:"required"`
+}
 
 type CloudflareZonePurgeRequestBody struct {
 	Path string `json:"path"`

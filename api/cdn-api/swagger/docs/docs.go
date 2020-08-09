@@ -97,6 +97,244 @@ var doc = `{
                 }
             }
         },
+        "/api/v1/cloudflare/dns/create/record": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Cloudfalre (DNS)"
+                ],
+                "summary": "Cloudflare DNS Create Record",
+                "operationId": "1",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.CloudflareDNSCreateDNSRecordRequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/cloudflare/dns/delete/record": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Cloudfalre (DNS)"
+                ],
+                "summary": "Cloudflare DNS Delete DNS Record",
+                "operationId": "1",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.CloudflareDNSDeleteDNSRecordRequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/cloudflare/dns/list/records": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Cloudfalre (DNS)"
+                ],
+                "summary": "Cloudflare DNS List DNS Records",
+                "operationId": "1",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.CloudflareDNSListDNSRecordsRequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/cloudflare/dns/record/detail": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Cloudfalre (DNS)"
+                ],
+                "summary": "Cloudflare DNS Record Detail",
+                "operationId": "1",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.CloudflareDNSRecordDetailRequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/cloudflare/zone/create": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Cloudfalre (Zones)"
+                ],
+                "summary": "Cloudflare Zone Create Zone",
+                "operationId": "1",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.CloudflareZoneCreateZoneRequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/cloudflare/zone/delete": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Cloudfalre (Zones)"
+                ],
+                "summary": "Cloudflare Zone Delete Zone",
+                "operationId": "1",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.CloudflareZoneDeleteZoneRequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/cloudflare/zone/details": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Cloudfalre (Zones)"
+                ],
+                "summary": "Cloudflare Zone Zone Detail",
+                "operationId": "1",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.CloudflareZoneZoneDetailRequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/cloudflare/zone/list/zones": {
             "post": {
                 "consumes": [
@@ -556,10 +794,171 @@ var doc = `{
                 }
             }
         },
+        "api.CloudflareDNSCreateDNSRecordRequestBody": {
+            "type": "object",
+            "required": [
+                "auth_key",
+                "content",
+                "proxied",
+                "record_name",
+                "type",
+                "user",
+                "zone_name"
+            ],
+            "properties": {
+                "auth_key": {
+                    "type": "string"
+                },
+                "content": {
+                    "type": "string"
+                },
+                "priority": {
+                    "type": "integer"
+                },
+                "proxied": {
+                    "type": "boolean"
+                },
+                "record_name": {
+                    "type": "string"
+                },
+                "ttl": {
+                    "type": "integer"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "user": {
+                    "type": "string"
+                },
+                "zone_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "api.CloudflareDNSDeleteDNSRecordRequestBody": {
+            "type": "object",
+            "required": [
+                "auth_key",
+                "record_name",
+                "user"
+            ],
+            "properties": {
+                "auth_key": {
+                    "type": "string"
+                },
+                "record_name": {
+                    "type": "string"
+                },
+                "user": {
+                    "type": "string"
+                }
+            }
+        },
+        "api.CloudflareDNSListDNSRecordsRequestBody": {
+            "type": "object",
+            "required": [
+                "auth_key",
+                "name",
+                "user"
+            ],
+            "properties": {
+                "auth_key": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "user": {
+                    "type": "string"
+                }
+            }
+        },
+        "api.CloudflareDNSRecordDetailRequestBody": {
+            "type": "object",
+            "required": [
+                "auth_key",
+                "record_name",
+                "user"
+            ],
+            "properties": {
+                "auth_key": {
+                    "type": "string"
+                },
+                "record_name": {
+                    "type": "string"
+                },
+                "user": {
+                    "type": "string"
+                }
+            }
+        },
+        "api.CloudflareZoneCreateZoneRequestBody": {
+            "type": "object",
+            "required": [
+                "auth_key",
+                "name",
+                "user"
+            ],
+            "properties": {
+                "auth_key": {
+                    "type": "string"
+                },
+                "jump_start": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "user": {
+                    "type": "string"
+                }
+            }
+        },
+        "api.CloudflareZoneDeleteZoneRequestBody": {
+            "type": "object",
+            "required": [
+                "auth_key",
+                "name",
+                "user"
+            ],
+            "properties": {
+                "auth_key": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "user": {
+                    "type": "string"
+                }
+            }
+        },
         "api.CloudflareZonePurgeRequestBody": {
             "type": "object",
             "properties": {
                 "path": {
+                    "type": "string"
+                }
+            }
+        },
+        "api.CloudflareZoneZoneDetailRequestBody": {
+            "type": "object",
+            "required": [
+                "auth_key",
+                "name",
+                "user"
+            ],
+            "properties": {
+                "auth_key": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "user": {
                     "type": "string"
                 }
             }
