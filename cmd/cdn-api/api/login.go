@@ -12,7 +12,7 @@ import (
 	jwt "github.com/appleboy/gin-jwt/v2"
 
 	customLogHandle "github.com/fancyshenmue/golang-gin-sample/pkg/loghandle"
-	mongoDatabase "github.com/fancyshenmue/golang-gin-sample/pkg/mongo/pkg"
+	customMongoDatabase "github.com/fancyshenmue/golang-gin-sample/pkg/mongo/pkg"
 	customMongoSetup "github.com/fancyshenmue/golang-gin-sample/pkg/mongo/setup"
 	customValidation "github.com/fancyshenmue/golang-gin-sample/pkg/validation"
 )
@@ -58,7 +58,7 @@ func AuthMiddleware(chooseGroup string) *jwt.GinJWTMiddleware {
 			password := loginVals.Password
 
 			// check account from mongo
-			query := mongoDatabase.MongoResultHelper{
+			query := customMongoDatabase.MongoResultHelper{
 				Cl:        mongoClient,
 				Db:        customMongoSetup.MongoDatabase,
 				Coll:      "users",
@@ -96,7 +96,7 @@ func AuthMiddleware(chooseGroup string) *jwt.GinJWTMiddleware {
 		},
 		Authorizator: func(data interface{}, c *gin.Context) bool {
 			// check account group from mongo
-			queryGroup := mongoDatabase.MongoResultHelper{
+			queryGroup := customMongoDatabase.MongoResultHelper{
 				Cl:        mongoClient,
 				Db:        customMongoSetup.MongoDatabase,
 				Coll:      "groups",
