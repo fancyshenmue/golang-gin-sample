@@ -47,6 +47,46 @@ func (c *MongoResultHelper) FindOneDataFromMongo() ([]bson.M, error) {
 	return result, err
 }
 
+// FindDataComplexQueryFromMongo | Find Data Complex Query From Mongo
+func (c *MongoResultComplexQueryHelper) FindDataComplexQueryFromMongo() ([]bson.M, error) {
+	customLogHandle.LogInfo(
+		"FindDataComplexQueryFromMongo",
+		"Find Data Complex Query From Mongo",
+		"Find Data Complex Query From Mongo",
+	)
+
+	var (
+		err    error
+		result []bson.M
+	)
+
+	ctx := context.TODO()
+
+	collection := c.Cl.Database(c.Db).Collection(c.Coll)
+
+	filter := bson.M{
+		"$and": c.FindData,
+	}
+
+	cur, err := collection.Find(ctx, filter)
+	customLogHandle.ErrorHandle(
+		"FindDataComplexQueryFromMongo",
+		"Find Data Complex Query From Mongo",
+		"Find Data Complex Query From Mongo filter error",
+		err,
+	)
+
+	err = cur.All(ctx, &result)
+	customLogHandle.ErrorHandle(
+		"FindDataComplexQueryFromMongo",
+		"Find Data Complex Query From Mongo",
+		"Find Data Complex Query From Mongo result error",
+		err,
+	)
+
+	return result, err
+}
+
 // FindDataRegexFromMongo | Find Data Regex From Mongo
 func (c *MongoResultHelper) FindDataRegexFromMongo() []bson.M {
 	customLogHandle.LogInfo(

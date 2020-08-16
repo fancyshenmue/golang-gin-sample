@@ -1,6 +1,9 @@
 package pkg
 
-import "go.mongodb.org/mongo-driver/mongo"
+import (
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
+)
 
 type MongoResultHelper struct {
 	Cl        *mongo.Client
@@ -8,6 +11,13 @@ type MongoResultHelper struct {
 	Coll      string
 	FindField string
 	FindData  string
+}
+
+type MongoResultComplexQueryHelper struct {
+	Cl       *mongo.Client
+	Db       string
+	Coll     string
+	FindData []bson.M
 }
 
 type MongoUpdateHelper struct {
