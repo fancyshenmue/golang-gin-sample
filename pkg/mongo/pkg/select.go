@@ -122,10 +122,10 @@ func (c *MongoResultHelper) FindDataRegexFromMongo() []bson.M {
 	return episodesFiltered
 }
 
-// WhiteLabelInfoGetAll | White Label Info Get All
-func WhiteLabelInfoGetAll(client *mongo.Client, databaseName, collectionName string, findNum int64) []bson.M {
+// ResponseSample | Response Sample
+func ResponseSample(client *mongo.Client, databaseName, collectionName string, findNum int64) []bson.M {
 	customLogHandle.LogInfo(
-		"WhiteLabelInfoGetAll",
+		"ResponseSample",
 		"select all white label info from mongo",
 		"select all white label info from mongo",
 	)
@@ -142,7 +142,7 @@ func WhiteLabelInfoGetAll(client *mongo.Client, databaseName, collectionName str
 	cur, err := collection.Find(ctx, bson.M{}, findOptions)
 	defer cur.Close(ctx)
 	customLogHandle.ErrorHandle(
-		"WhiteLabelInfoGetAll",
+		"ResponseSample",
 		"select all white label info from mongo",
 		"select all white label info from mongo cursor error",
 		err,
@@ -152,7 +152,7 @@ func WhiteLabelInfoGetAll(client *mongo.Client, databaseName, collectionName str
 		var elem bson.M
 		err := cur.Decode(&elem)
 		customLogHandle.ErrorHandle(
-			"WhiteLabelInfoGetAll",
+			"ResponseSample",
 			"select all white label info from mongo",
 			"select all white label info from mongo cursor append error",
 			err,
@@ -163,7 +163,7 @@ func WhiteLabelInfoGetAll(client *mongo.Client, databaseName, collectionName str
 
 	err = cur.Err()
 	customLogHandle.ErrorHandle(
-		"WhiteLabelInfoGetAll",
+		"ResponseSample",
 		"select all white label info from mongo",
 		"select all white label info from mongo result error",
 		err,
