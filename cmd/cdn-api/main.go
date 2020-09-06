@@ -5,15 +5,15 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	_ "github.com/fancyshenmue/golang-gin-sample/api/cdn-api/swagger/docs"
+	_ "golang-gin-sample/api/cdn-api/swagger/docs"
 
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 
 	jwt "github.com/appleboy/gin-jwt/v2"
 
-	CDNAPI "github.com/fancyshenmue/golang-gin-sample/cmd/cdn-api/api"
-	CDNAPIRouters "github.com/fancyshenmue/golang-gin-sample/cmd/cdn-api/route"
+	CDNAPI "golang-gin-sample/cmd/cdn-api/api"
+	CDNAPIRouters "golang-gin-sample/cmd/cdn-api/route"
 )
 
 // @title CDN RESTful API

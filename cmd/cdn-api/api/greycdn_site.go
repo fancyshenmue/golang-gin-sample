@@ -6,8 +6,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	customHttp "github.com/fancyshenmue/golang-gin-sample/pkg/http"
-	customLogHandle "github.com/fancyshenmue/golang-gin-sample/pkg/loghandle"
+	customHttp "golang-gin-sample/pkg/http"
+	customLogHandle "golang-gin-sample/pkg/loghandle"
 )
 
 // GreyCDNSiteListAll | Grey CDN Site List All
