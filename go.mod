@@ -3,7 +3,7 @@ module golang-gin-sample
 go 1.14
 
 require (
-	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751 // indirect
+	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/appleboy/gin-jwt/v2 v2.6.3
 	github.com/cloudflare/cloudflare-go v0.13.0
 	github.com/coreos/etcd v3.3.22+incompatible // indirect
@@ -14,12 +14,14 @@ require (
 	github.com/gin-gonic/gin v1.6.3
 	github.com/gogo/protobuf v1.3.1 // indirect
 	github.com/google/uuid v1.1.1 // indirect
+	github.com/hashicorp/consul/api v1.6.0
 	github.com/jmoiron/sqlx v1.2.0
 	github.com/lib/pq v1.8.0 // indirect
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/sirupsen/logrus v1.6.0
 	github.com/swaggo/files v0.0.0-20190704085106-630677cd5c14
 	github.com/swaggo/gin-swagger v1.2.0
+	github.com/swaggo/swag v1.5.1
 	go.etcd.io/etcd v3.3.22+incompatible // indirect
 	go.mongodb.org/mongo-driver v1.4.0
 	go.uber.org/zap v1.15.0 // indirect

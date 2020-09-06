@@ -19,15 +19,33 @@ pipeline {
       description: 'GIT REVISION'
     )
     choice(name: 'APP_NAME',
-      choices: ['NOTSUPPORT', 'cdn-api', 'etcd-api', 'mongo-api'],
+      choices: [
+        'NOTSUPPORT',
+        'cdn-api',
+        'consul-api',
+        'etcd-api',
+        'mongo-api'
+      ],
       description: 'CHOOSE APP_NAME'
     )
     choice(name: 'ACTION',
-      choices: ['NOTSUPPORT', 'build-image', 'push-image', 'deploy', 'remove'],
+      choices: [
+        'NOTSUPPORT',
+        'build-image',
+        'push-image',
+        'deploy',
+        'remove'
+      ],
       description: 'CHOOSE ACTION'
     )
     choice(name: 'ENVIRONMENT',
-      choices: ["NOTSUPPORT", "dev", "stg", "uat", "prod"],
+      choices: [
+        'NOTSUPPORT',
+        'dev',
+        'stg',
+        'uat',
+        'prod'
+      ],
       description: 'CHOOSE ENVIRONMENT'
     )
   }

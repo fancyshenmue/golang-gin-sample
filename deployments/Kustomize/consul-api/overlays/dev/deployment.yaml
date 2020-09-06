@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consul-api
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - name: consul-api
+          env:
+            - name: CONSUL_CONNECT_INFO
+              valueFrom:
+                secretKeyRef:
+                  name: consul-api-info
+                  key: CONSUL_CONNECT_INFO
+            - name: CONSUL_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: consul-api-info
+                  key: CONSUL_TOKEN
+            - name: MONGO_ADDRESS
+              valueFrom:
+                secretKeyRef:
+                  name: consul-api-info
+                  key: MONGO_ADDRESS
+            - name: MONGO_USER
+              valueFrom:
+                secretKeyRef:
+                  name: consul-api-info
+                  key: MONGO_USER
+            - name: MONGO_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: consul-api-info
+                  key: MONGO_PASS
+            - name: MONGO_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: consul-api-info
+                  key: MONGO_DATABASE
+            - name: JWT_TOKEN_HEADER
+              valueFrom:
+                secretKeyRef:
+                  name: consul-api-info
+                  key: JWT_TOKEN_HEADER
+            - name: JWT_REALM
+              valueFrom:
+                secretKeyRef:
+                  name: consul-api-info
+                  key: JWT_REALM
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: consul-api-info
+                  key: JWT_KEY
