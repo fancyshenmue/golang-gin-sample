@@ -197,6 +197,8 @@ type CloudflareDNSDeleteDNSRecordRequestBody struct {
 
 /* cloudflare zone */
 
+type CloudflareCDNResponseBody map[string]interface{}
+
 type CloudflareZoneCreateZoneRequestBody struct {
 	User      string `json:"user" binding:"required"`
 	AuthKey   string `json:"auth_key" binding:"required"`

@@ -3,7 +3,7 @@ package route
 import (
 	"github.com/gin-gonic/gin"
 
-	cdnapi "github.com/fancyshenmue/golang-gin-sample/cmd/cdn-api/api"
+	cdnapi "golang-gin-sample/cmd/cdn-api/api"
 )
 
 func CDNAPICloudflare(route *gin.Engine) {
