@@ -1,7 +1,7 @@
 package main
 
 import (
-	customJob "github.com/fancyshenmue/golang-gin-sample/cmd/schedule/job"
+	customJob "golang-gin-sample/cmd/schedule/job"
 
 	"github.com/robfig/cron/v3"
 )

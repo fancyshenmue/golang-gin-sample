@@ -11,12 +11,12 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 
-	customHttp "github.com/fancyshenmue/golang-gin-sample/pkg/http"
-	customLogHandle "github.com/fancyshenmue/golang-gin-sample/pkg/loghandle"
-	customMongo "github.com/fancyshenmue/golang-gin-sample/pkg/mongo/pkg"
-	customMongoDatabase "github.com/fancyshenmue/golang-gin-sample/pkg/mongo/pkg"
-	customMongoSetup "github.com/fancyshenmue/golang-gin-sample/pkg/mongo/setup"
-	customPostgresSetup "github.com/fancyshenmue/golang-gin-sample/pkg/postgres"
+	customHttp "golang-gin-sample/pkg/http"
+	customLogHandle "golang-gin-sample/pkg/loghandle"
+	customMongo "golang-gin-sample/pkg/mongo/pkg"
+	customMongoDatabase "golang-gin-sample/pkg/mongo/pkg"
+	customMongoSetup "golang-gin-sample/pkg/mongo/setup"
+	customPostgresSetup "golang-gin-sample/pkg/postgres"
 )
 
 var (
