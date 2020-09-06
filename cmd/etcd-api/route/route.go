@@ -5,7 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	etcdapi "github.com/fancyshenmue/golang-gin-sample/cmd/etcd-api/api"
+	etcdapi "golang-gin-sample/cmd/etcd-api/api"
 )
 
 func Etcd(route *gin.Engine) {

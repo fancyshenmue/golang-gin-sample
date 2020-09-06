@@ -8,9 +8,9 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.etcd.io/etcd/clientv3"
 
-	customEtcd "github.com/fancyshenmue/golang-gin-sample/pkg/etcd/pkg"
-	customEtcdSetup "github.com/fancyshenmue/golang-gin-sample/pkg/etcd/setup"
-	customLogHandle "github.com/fancyshenmue/golang-gin-sample/pkg/loghandle"
+	customEtcd "golang-gin-sample/pkg/etcd/pkg"
+	customEtcdSetup "golang-gin-sample/pkg/etcd/setup"
+	customLogHandle "golang-gin-sample/pkg/loghandle"
 )
 
 // GetKey | Get Key
@@ -36,7 +36,7 @@ func (e *Environment) GetKey(c *gin.Context) {
 
 	key = body["key"]
 
-	kv, cli := customEtcd.ConnectETCD(customEtcdSetup.ETCDConnectInfo)
+	kv, cli := customEtcd.ConnectETCD(customEtcdSetup.ETCDConnectInfo, customEtcdSetup.ETCDConnectUser, customEtcdSetup.ETCDConnectPassword)
 	defer cli.Close()
 
 	getresp, err := kv.Get(ctx, key)
@@ -110,7 +110,7 @@ func (e *Environment) GetKeyWithPrefix(c *gin.Context) {
 
 	keyPreifx = body["prefix"]
 
-	kv, cli := customEtcd.ConnectETCD(customEtcdSetup.ETCDConnectInfo)
+	kv, cli := customEtcd.ConnectETCD(customEtcdSetup.ETCDConnectInfo, customEtcdSetup.ETCDConnectUser, customEtcdSetup.ETCDConnectPassword)
 	defer cli.Close()
 
 	rangeresp, err := kv.Get(context.TODO(), keyPreifx, clientv3.WithPrefix())

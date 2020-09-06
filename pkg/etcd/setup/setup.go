@@ -7,7 +7,9 @@ import (
 
 var (
 	// ETCDConnectInfo | ETCD Connect Info
-	ETCDConnectInfo = strings.Split(os.Getenv("ETCD_CONNECT_INFO"), ",")
+	ETCDConnectInfo     = strings.Split(os.Getenv("ETCD_CONNECT_INFO"), ",")
+	ETCDConnectUser     = os.Getenv("ETCD_CONNECT_USER")
+	ETCDConnectPassword = os.Getenv("ETCD_CONNECT_PASSWD")
 	// ETCDConnectInfoMap | ETCD Connection Info
 	ETCDConnectInfoMap = map[string][]string{
 		"SIT": {
