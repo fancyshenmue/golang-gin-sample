@@ -9,9 +9,9 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson"
 
-	customLogHandle "github.com/fancyshenmue/golang-gin-sample/pkg/loghandle"
-	mongoDatabase "github.com/fancyshenmue/golang-gin-sample/pkg/mongo/pkg"
-	customMongoSetup "github.com/fancyshenmue/golang-gin-sample/pkg/mongo/setup"
+	customLogHandle "golang-gin-sample/pkg/loghandle"
+	mongoDatabase "golang-gin-sample/pkg/mongo/pkg"
+	customMongoSetup "golang-gin-sample/pkg/mongo/setup"
 )
 
 // DeleteSingleDocument | Delete Single Document
