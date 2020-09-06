@@ -11,10 +11,10 @@ import (
 
 	jwt "github.com/appleboy/gin-jwt/v2"
 
-	customLogHandle "github.com/fancyshenmue/golang-gin-sample/pkg/loghandle"
-	mongoDatabase "github.com/fancyshenmue/golang-gin-sample/pkg/mongo/pkg"
-	customMongoSetup "github.com/fancyshenmue/golang-gin-sample/pkg/mongo/setup"
-	customValidation "github.com/fancyshenmue/golang-gin-sample/pkg/validation"
+	customLogHandle "golang-gin-sample/pkg/loghandle"
+	mongoDatabase "golang-gin-sample/pkg/mongo/pkg"
+	customMongoSetup "golang-gin-sample/pkg/mongo/setup"
+	customValidation "golang-gin-sample/pkg/validation"
 )
 
 var (

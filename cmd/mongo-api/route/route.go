@@ -3,7 +3,7 @@ package route
 import (
 	"github.com/gin-gonic/gin"
 
-	mongoapi "github.com/fancyshenmue/golang-gin-sample/cmd/mongo-api/api"
+	mongoapi "golang-gin-sample/cmd/mongo-api/api"
 )
 
 func MongoRoute(route *gin.Engine) {

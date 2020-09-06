@@ -5,15 +5,15 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	_ "github.com/fancyshenmue/golang-gin-sample/api/mongo-api/swagger/docs"
+	_ "golang-gin-sample/api/mongo-api/swagger/docs"
 
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 
 	jwt "github.com/appleboy/gin-jwt/v2"
 
-	mongoAPI "github.com/fancyshenmue/golang-gin-sample/cmd/mongo-api/api"
-	mongoAPIRouters "github.com/fancyshenmue/golang-gin-sample/cmd/mongo-api/route"
+	mongoAPI "golang-gin-sample/cmd/mongo-api/api"
+	mongoAPIRouters "golang-gin-sample/cmd/mongo-api/route"
 )
 
 // @title Mongo RESTful API
