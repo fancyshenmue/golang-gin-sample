@@ -8,9 +8,9 @@ import (
 	"github.com/gin-gonic/gin"
 	// "go.etcd.io/etcd/clientv3"
 
-	customEtcd "github.com/fancyshenmue/golang-gin-sample/pkg/etcd/pkg"
-	customEtcdSetup "github.com/fancyshenmue/golang-gin-sample/pkg/etcd/setup"
-	customLogHandle "github.com/fancyshenmue/golang-gin-sample/pkg/loghandle"
+	customEtcd "golang-gin-sample/pkg/etcd/pkg"
+	customEtcdSetup "golang-gin-sample/pkg/etcd/setup"
+	customLogHandle "golang-gin-sample/pkg/loghandle"
 )
 
 // PutKey | Put Key
@@ -38,7 +38,7 @@ func (e *Environment) PutKey(c *gin.Context) {
 	etcdKey = body["key"]
 	etcdValue = body["value"]
 
-	kv, cli := customEtcd.ConnectETCD(customEtcdSetup.ETCDConnectInfo)
+	kv, cli := customEtcd.ConnectETCD(customEtcdSetup.ETCDConnectInfo, customEtcdSetup.ETCDConnectUser, customEtcdSetup.ETCDConnectPassword)
 	defer cli.Close()
 
 	putresp, err := kv.Put(ctx, etcdKey, etcdValue)

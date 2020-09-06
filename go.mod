@@ -22,7 +22,7 @@ require (
 	github.com/swaggo/files v0.0.0-20190704085106-630677cd5c14
 	github.com/swaggo/gin-swagger v1.2.0
 	github.com/swaggo/swag v1.5.1
-	go.etcd.io/etcd v3.3.22+incompatible // indirect
+	go.etcd.io/etcd v3.3.22+incompatible
 	go.mongodb.org/mongo-driver v1.4.0
 	go.uber.org/zap v1.15.0 // indirect
 	golang.org/x/net v0.0.0-20200707034311-ab3426394381

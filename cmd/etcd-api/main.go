@@ -5,15 +5,15 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	_ "github.com/fancyshenmue/golang-gin-sample/api/etcd-api/swagger/docs"
+	_ "golang-gin-sample/api/etcd-api/swagger/docs"
 
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 
 	jwt "github.com/appleboy/gin-jwt/v2"
 
-	etcdAPIRouters "github.com/fancyshenmue/golang-gin-sample/cmd/etcd-api/route"
-	etcdapi "github.com/fancyshenmue/golang-gin-sample/cmd/mongo-api/api"
+	etcdAPIRouters "golang-gin-sample/cmd/etcd-api/route"
+	etcdapi "golang-gin-sample/cmd/mongo-api/api"
 )
 
 // @title ETCD RESTful API

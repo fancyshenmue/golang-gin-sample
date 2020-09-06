@@ -4,9 +4,9 @@ import (
 	"context"
 	"net/http"
 
-	customEtcd "github.com/fancyshenmue/golang-gin-sample/pkg/etcd/pkg"
-	customEtcdSetup "github.com/fancyshenmue/golang-gin-sample/pkg/etcd/setup"
-	customLogHandle "github.com/fancyshenmue/golang-gin-sample/pkg/loghandle"
+	customEtcd "golang-gin-sample/pkg/etcd/pkg"
+	customEtcdSetup "golang-gin-sample/pkg/etcd/setup"
+	customLogHandle "golang-gin-sample/pkg/loghandle"
 
 	"github.com/gin-gonic/gin"
 )
@@ -33,7 +33,7 @@ func (e *Environment) DeleteKey(c *gin.Context) {
 
 	key = body["key"]
 
-	kv, cli := customEtcd.ConnectETCD(customEtcdSetup.ETCDConnectInfo)
+	kv, cli := customEtcd.ConnectETCD(customEtcdSetup.ETCDConnectInfo, customEtcdSetup.ETCDConnectUser, customEtcdSetup.ETCDConnectPassword)
 	defer cli.Close()
 
 	_, err := kv.Delete(ctx, key)

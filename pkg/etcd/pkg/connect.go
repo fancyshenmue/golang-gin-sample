@@ -8,9 +8,11 @@ import (
 )
 
 // ConnectETCD | Connect to ETCD
-func ConnectETCD(etcdServer []string) (clientv3.KV, *clientv3.Client) {
+func ConnectETCD(etcdServer []string, etcdUser, etcdPasswd string) (clientv3.KV, *clientv3.Client) {
 	cli, err := clientv3.New(clientv3.Config{
 		Endpoints:   etcdServer,
+		Username:    etcdUser,
+		Password:    etcdPasswd,
 		DialTimeout: 5 * time.Second,
 	})
 	if err != nil {
