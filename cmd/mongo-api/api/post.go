@@ -1,16 +1,11 @@
 package api
 
 import (
-	"encoding/json"
-	"fmt"
-	"io/ioutil"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"go.mongodb.org/mongo-driver/bson"
 
-	customLogHandle "golang-gin-sample/pkg/loghandle"
-	mongoDatabase "golang-gin-sample/pkg/mongo/pkg"
+	customMongoDatabase "golang-gin-sample/pkg/mongo/pkg"
 	customMongoSetup "golang-gin-sample/pkg/mongo/setup"
 )
 
@@ -22,51 +17,36 @@ import (
 // @accept  json
 // @produce json
 // @param collection path string true "collection"
-// @param params body MongoInsertSingleDocumentBodyTop true "body"
+// @param params body MongoAPIInsertSingleDocumentBodyTop true "body"
 // @Success 200 string string
-// @Router /api/v1/insertSingleDocument/{collection} [post]
+// @Router /api/v1/insertSingleDocument [post]
 func InsertSingleDocument(c *gin.Context) {
-	body, _ := ioutil.ReadAll(c.Request.Body)
-
-	var data bson.M
-
-	json.Unmarshal(body, &data)
-
-	query := mongoDatabase.MongoResultHelper{
-		Cl:        mongoClient,
-		Db:        customMongoSetup.MongoDatabase,
-		Coll:      c.Param("collection"),
-		FindField: "name",
-		FindData:  fmt.Sprintf("%v", data["name"]),
-	}
-
-	// check data exist or not
-	check, _ := query.FindOneDataFromMongo()
-	customLogHandle.ErrorHandle(
-		"InsertSingleDocument",
-		"InsertSingleDocument",
-		"InsertSingleDocument (Get Mongo Document error)",
-		err,
+	var (
+		reqBody MongoAPIInsertSingleDocumentBodyTop
+		resBody CommonMap
 	)
 
-	if len(check) == 0 {
-		mongoDatabase.InsertSingleDocument(
-			mongoClient,
-			customMongoSetup.MongoDatabase,
-			c.Param("collection"),
-			data,
-		)
-
-		c.JSON(http.StatusOK, gin.H{
-			"status": "Success",
-			"info":   data,
-		})
-	} else if len(check) > 0 {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"status": "Fail",
-			"info":   "data already exist",
-		})
+	if err := c.ShouldBindJSON(&reqBody); err != nil {
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
 	}
+
+	// body, _ := ioutil.ReadAll(reqBody.Body)
+
+	// json.Unmarshal(body, &MongoAPIInsertSingleDocumentBodyTop.Body)
+
+	customMongoDatabase.InsertSingleDocument(
+		mongoClient,
+		customMongoSetup.MongoDatabase,
+		reqBody.Collection,
+		reqBody.Body,
+	)
+
+	resBody = make(map[string]interface{})
+	resBody["status"] = "Success"
+	resBody["data"] = reqBody.Body
+
+	c.JSON(http.StatusOK, resBody)
 }
 
 // InsertManyDocument | Insert Many Document
@@ -77,52 +57,40 @@ func InsertSingleDocument(c *gin.Context) {
 // @accept  json
 // @produce json
 // @param collection path string true "collection"
-// @param params body MongoInsertManyDocumentBodyTop true "body"
+// @param params body MongoAPIInsertManyDocumentBodyTop true "body"
 // @Success 200 string string
-// @Router /api/v1/insertManyDocument/{collection} [post]
+// @Router /api/v1/insertManyDocument [post]
 func InsertManyDocument(c *gin.Context) {
-	body, _ := ioutil.ReadAll(c.Request.Body)
-
 	var (
-		data           []bson.M
-		insertDataInfo []string
+		reqBody MongoAPIInsertManyDocumentBodyTop
+		resBody CommonMap
 	)
 
-	json.Unmarshal(body, &data)
-
-	for _, v := range data {
-		// check data exist or not
-		query := mongoDatabase.MongoResultHelper{
-			Cl:        mongoClient,
-			Db:        customMongoSetup.MongoDatabase,
-			Coll:      c.Param("collection"),
-			FindField: "name",
-			FindData:  fmt.Sprintf("%v", v["name"]),
-		}
-
-		check, _ := query.FindOneDataFromMongo()
-		customLogHandle.ErrorHandle(
-			"InsertManyDocument",
-			"InsertManyDocument",
-			"InsertManyDocument (Get Mongo Document error)",
-			err,
-		)
-
-		// insert data if not exist
-		if len(check) == 0 {
-			mongoDatabase.InsertSingleDocument(
-				mongoClient,
-				customMongoSetup.MongoDatabase,
-				c.Param("collection"),
-				v,
-			)
-
-			insertDataInfo = append(insertDataInfo, fmt.Sprintf("%v", v["name"]))
-		}
+	if err := c.ShouldBindJSON(&reqBody); err != nil {
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"status": "Success",
-		"info":   insertDataInfo,
-	})
+	// body, _ := ioutil.ReadAll(c.Request.Body)
+
+	// var (
+	// 	data           []bson.M
+	// 	insertDataInfo []string
+	// )
+
+	// json.Unmarshal(body, &data)
+
+	for _, data := range reqBody.Body {
+		customMongoDatabase.InsertSingleDocument(
+			mongoClient,
+			customMongoSetup.MongoDatabase,
+			reqBody.Collection,
+			data,
+		)
+	}
+
+	resBody = make(map[string]interface{})
+	resBody["status"] = "Success"
+
+	c.JSON(http.StatusOK, resBody)
 }
