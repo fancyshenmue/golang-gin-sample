@@ -90,7 +90,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/api.MongoGetBodyTop"
+                            "$ref": "#/definitions/api.MongoAPIGetBodyTop"
                         }
                     }
                 ],
@@ -124,7 +124,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/api.MongoGetBodyTop"
+                            "$ref": "#/definitions/api.MongoAPIGetRegexBodyTop"
                         }
                     }
                 ],
@@ -138,7 +138,7 @@ var doc = `{
                 }
             }
         },
-        "/api/v1/insertManyDocument/{collection}": {
+        "/api/v1/insertManyDocument": {
             "post": {
                 "consumes": [
                     "application/json"
@@ -165,7 +165,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/api.MongoInsertManyDocumentBodyTop"
+                            "$ref": "#/definitions/api.MongoAPIInsertManyDocumentBodyTop"
                         }
                     }
                 ],
@@ -179,7 +179,7 @@ var doc = `{
                 }
             }
         },
-        "/api/v1/insertSingleDocument/{collection}": {
+        "/api/v1/insertSingleDocument": {
             "post": {
                 "consumes": [
                     "application/json"
@@ -206,7 +206,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/api.MongoInsertSingleDocumentBodyTop"
+                            "$ref": "#/definitions/api.MongoAPIInsertSingleDocumentBodyTop"
                         }
                     }
                 ],
@@ -263,6 +263,74 @@ var doc = `{
         }
     },
     "definitions": {
+        "api.MongoAPIGetBodyTop": {
+            "type": "object",
+            "required": [
+                "body",
+                "collection"
+            ],
+            "properties": {
+                "body": {
+                    "type": "string"
+                },
+                "collection": {
+                    "type": "string"
+                }
+            }
+        },
+        "api.MongoAPIGetRegexBodyTop": {
+            "type": "object",
+            "required": [
+                "collection",
+                "data",
+                "field"
+            ],
+            "properties": {
+                "collection": {
+                    "type": "string"
+                },
+                "data": {
+                    "type": "string"
+                },
+                "field": {
+                    "type": "string"
+                }
+            }
+        },
+        "api.MongoAPIInsertManyDocumentBodyTop": {
+            "type": "object",
+            "required": [
+                "collection"
+            ],
+            "properties": {
+                "body": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": true
+                    }
+                },
+                "collection": {
+                    "type": "string"
+                }
+            }
+        },
+        "api.MongoAPIInsertSingleDocumentBodyTop": {
+            "type": "object",
+            "required": [
+                "body",
+                "collection"
+            ],
+            "properties": {
+                "body": {
+                    "type": "object",
+                    "additionalProperties": true
+                },
+                "collection": {
+                    "type": "string"
+                }
+            }
+        },
         "api.MongoDeleteSingleDocumentBodyTop": {
             "type": "object",
             "properties": {
@@ -270,29 +338,6 @@ var doc = `{
                     "type": "string"
                 }
             }
-        },
-        "api.MongoGetBodyTop": {
-            "type": "object",
-            "properties": {
-                "collection": {
-                    "type": "string"
-                },
-                "findData": {
-                    "type": "string"
-                },
-                "findField": {
-                    "type": "string"
-                }
-            }
-        },
-        "api.MongoInsertManyDocumentBodyTop": {
-            "type": "array",
-            "items": {
-                "$ref": "#/definitions/api.MongoInsertSingleDocumentBodyTop"
-            }
-        },
-        "api.MongoInsertSingleDocumentBodyTop": {
-            "type": "object"
         },
         "api.MongoUpdateSingleDocumentBodyTop": {
             "type": "object",

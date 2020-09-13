@@ -18,8 +18,8 @@ func MongoRoute(route *gin.Engine) {
 	mongo.POST("/getDocumentRegex", mongoapi.GetDocumentRegex)
 
 	// Insert
-	mongo.POST("/insertSingleDocument/:collection", mongoapi.InsertSingleDocument)
-	mongo.POST("/insertManyDocument/:collection", mongoapi.InsertManyDocument)
+	mongo.POST("/insertSingleDocument", mongoapi.InsertSingleDocument)
+	mongo.POST("/insertManyDocument", mongoapi.InsertManyDocument)
 
 	// Update
 	mongo.PUT("/updateSingleDocument/:collection", mongoapi.UpdateSingleDocument)

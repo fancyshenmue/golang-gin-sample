@@ -1,5 +1,7 @@
 package api
 
+import "go.mongodb.org/mongo-driver/bson"
+
 /* auth */
 
 type login struct {
@@ -17,15 +19,31 @@ type User struct {
 
 /* api */
 
-type MongoGetBodyTop struct {
-	Collection string
-	FindField  string
-	FindData   string
+type CommonInterface interface{}
+type CommonMap map[string]interface{}
+type CommonMapSlice []CommonMap
+
+type MongoAPIGetBodyTop struct {
+	Collection string   `json:"collection" binding:"required"`
+	Body       []bson.M `json:"body" binding:"required"`
 }
 
-type MongoInsertSingleDocumentBodyTop interface{}
+type MongoAPIGetRegexBodyTop struct {
+	Collection string `json:"collection" binding:"required"`
+	Field      string `json:"field" binding:"required"`
+	Data       string `json:"data" binding:"required"`
+}
 
-type MongoInsertManyDocumentBodyTop []MongoInsertSingleDocumentBodyTop
+// MongoAPIInsertSingleDocumentBodyTop
+type MongoAPIInsertSingleDocumentBodyTop struct {
+	Collection string                 `json:"collection" binding:"required"`
+	Body       map[string]interface{} `json:"body" binding:"required"`
+}
+
+type MongoAPIInsertManyDocumentBodyTop struct {
+	Collection string                   `json:"collection" binding:"required"`
+	Body       []map[string]interface{} `json:"body" binding:"required"`
+}
 
 type MongoUpdateSingleDocumentBodyTop struct {
 	Name  string

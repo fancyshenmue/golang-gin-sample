@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	customLogHandle "golang-gin-sample/pkg/loghandle"
-	mongoDatabase "golang-gin-sample/pkg/mongo/pkg"
+	customMongoDatabase "golang-gin-sample/pkg/mongo/pkg"
 	customMongoSetup "golang-gin-sample/pkg/mongo/setup"
 )
 
@@ -17,25 +17,28 @@ import (
 // @version 1.0
 // @accept  json
 // @produce json
-// @param params body MongoGetBodyTop true "body"
+// @param params body MongoAPIGetBodyTop true "body"
 // @Success 200 string string
 // @Router /api/v1/getDocument [post]
 func GetDocument(c *gin.Context) {
 	var (
-		body MongoGetBodyTop
+		reqBody MongoAPIGetBodyTop
+		resBody CommonMap
 	)
 
-	c.BindJSON(&body)
-
-	query := mongoDatabase.MongoResultHelper{
-		Cl:        mongoClient,
-		Db:        customMongoSetup.MongoDatabase,
-		Coll:      body.Collection,
-		FindField: body.FindField,
-		FindData:  body.FindData,
+	if err := c.ShouldBindJSON(&reqBody); err != nil {
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
 	}
 
-	resp, err := query.FindOneDataFromMongo()
+	query := customMongoDatabase.MongoResultComplexQueryHelper{
+		Cl:       mongoClient,
+		Db:       customMongoSetup.MongoDatabase,
+		Coll:     reqBody.Collection,
+		FindData: reqBody.Body,
+	}
+
+	resp, err := query.FindDataComplexQueryFromMongo()
 	customLogHandle.ErrorHandle(
 		"GetDocument",
 		"GetDocument",
@@ -43,10 +46,11 @@ func GetDocument(c *gin.Context) {
 		err,
 	)
 
-	c.JSON(http.StatusOK, gin.H{
-		"status": "Success",
-		"info":   resp,
-	})
+	resBody = make(map[string]interface{})
+	resBody["status"] = "Success"
+	resBody["result"] = resp
+
+	c.JSON(http.StatusOK, resBody)
 }
 
 // GetDocumentRegex | Get Document Regex
@@ -56,22 +60,26 @@ func GetDocument(c *gin.Context) {
 // @version 1.0
 // @accept  json
 // @produce json
-// @param params body MongoGetBodyTop true "body"
+// @param params body MongoAPIGetRegexBodyTop true "body"
 // @Success 200 string string
 // @Router /api/v1/getDocumentRegex [post]
 func GetDocumentRegex(c *gin.Context) {
 	var (
-		body MongoGetBodyTop
+		reqBody MongoAPIGetRegexBodyTop
+		resBody CommonMap
 	)
 
-	c.BindJSON(&body)
+	if err := c.ShouldBindJSON(&reqBody); err != nil {
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
 
-	query := mongoDatabase.MongoResultHelper{
+	query := customMongoDatabase.MongoResultHelper{
 		Cl:        mongoClient,
 		Db:        customMongoSetup.MongoDatabase,
-		Coll:      body.Collection,
-		FindField: body.FindField,
-		FindData:  body.FindData,
+		Coll:      reqBody.Collection,
+		FindField: reqBody.Field,
+		FindData:  reqBody.Data,
 	}
 
 	resp := query.FindDataRegexFromMongo()
@@ -82,8 +90,9 @@ func GetDocumentRegex(c *gin.Context) {
 		err,
 	)
 
-	c.JSON(http.StatusOK, gin.H{
-		"status": "Success",
-		"info":   resp,
-	})
+	resBody = make(map[string]interface{})
+	resBody["status"] = "Success"
+	resBody["result"] = resp
+
+	c.JSON(http.StatusOK, resBody)
 }
