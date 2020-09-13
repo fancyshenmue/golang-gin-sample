@@ -1,0 +1,100 @@
+@requestURL = http://127.0.0.1:8080/api/v1/insertManyDocument
+@jwt_token = MongoAPI
+@collection =
+
+POST {{ requestURL }} HTTP/1.1
+Content-Type: application/json
+Authorization: {{ jwt_token }}
+
+{
+    "collection": "{{ collection }}",
+    "body": [
+        {
+            "domain": [
+                "example.sample.com",
+                "example2.sample.com",
+                "example3.sample.com",
+                "example4.sample.com",
+                "example5.sample.com"
+            ],
+            "source": [
+                    "1.1.1.1",
+                    "1.1.1.2",
+                    "1.1.1.3",
+                    "1.1.1.4"
+            ],
+            "cdn": {
+                "cloudflare": [
+                    "example.sample.com",
+                    "example2.sample.com"
+                ],
+                "vorizon": [
+                    "example3.sample.com",
+                    "example4.sample.com"
+                ],
+                "grecdn": [
+                    "example5.sample.com"
+                ]
+            },
+            "name": "sample"
+        },
+        {
+            "domain": [
+                "example.sample2.com",
+                "example6.sample2.com",
+                "example7.sample2.com",
+                "example8.sample2.com",
+                "example9.sample2.com"
+            ],
+            "source": [
+                    "1.1.1.5",
+                    "1.1.1.6",
+                    "1.1.1.7",
+                    "1.1.1.8"
+            ],
+            "cdn": {
+                "cloudflare": [
+                    "example.sample2.com",
+                    "example2.sample2.com"
+                ],
+                "vorizon": [
+                    "example3.sample2.com",
+                    "example4.sample2.com"
+                ],
+                "grecdn": [
+                    "example5.sample2.com"
+                ]
+            },
+            "name": "sample2"
+        },
+        {
+            "domain": [
+                "example.sample3.com",
+                "example2.sample3.com",
+                "example3.sample3.com",
+                "example4.sample3.com",
+                "example5.sample3.com"
+            ],
+            "source": [
+                    "1.1.1.9",
+                    "1.1.1.10",
+                    "1.1.1.11",
+                    "1.1.1.12"
+            ],
+            "cdn": {
+                "cloudflare": [
+                    "example.sample3.com",
+                    "example2.sample3.com"
+                ],
+                "vorizon": [
+                    "example3.sample3.com",
+                    "example4.sample3.com"
+                ],
+                "grecdn": [
+                    "example5.sample3.com"
+                ]
+            },
+            "name": "sample3"
+        }
+    ]
+}
