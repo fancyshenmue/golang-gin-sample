@@ -1,24 +1,55 @@
 basePath: /
 definitions:
+  api.MongoAPIGetBodyTop:
+    properties:
+      body:
+        type: string
+      collection:
+        type: string
+    required:
+    - body
+    - collection
+    type: object
+  api.MongoAPIGetRegexBodyTop:
+    properties:
+      collection:
+        type: string
+      data:
+        type: string
+      field:
+        type: string
+    required:
+    - collection
+    - data
+    - field
+    type: object
+  api.MongoAPIInsertManyDocumentBodyTop:
+    properties:
+      body:
+        items:
+          additionalProperties: true
+          type: object
+        type: array
+      collection:
+        type: string
+    required:
+    - collection
+    type: object
+  api.MongoAPIInsertSingleDocumentBodyTop:
+    properties:
+      body:
+        additionalProperties: true
+        type: object
+      collection:
+        type: string
+    required:
+    - body
+    - collection
+    type: object
   api.MongoDeleteSingleDocumentBodyTop:
     properties:
       name:
         type: string
-    type: object
-  api.MongoGetBodyTop:
-    properties:
-      collection:
-        type: string
-      findData:
-        type: string
-      findField:
-        type: string
-    type: object
-  api.MongoInsertManyDocumentBodyTop:
-    items:
-      $ref: '#/definitions/api.MongoInsertSingleDocumentBodyTop'
-    type: array
-  api.MongoInsertSingleDocumentBodyTop:
     type: object
   api.MongoUpdateSingleDocumentBodyTop:
     properties:
@@ -78,7 +109,7 @@ paths:
         name: params
         required: true
         schema:
-          $ref: '#/definitions/api.MongoGetBodyTop'
+          $ref: '#/definitions/api.MongoAPIGetBodyTop'
       produces:
       - application/json
       responses:
@@ -100,7 +131,7 @@ paths:
         name: params
         required: true
         schema:
-          $ref: '#/definitions/api.MongoGetBodyTop'
+          $ref: '#/definitions/api.MongoAPIGetRegexBodyTop'
       produces:
       - application/json
       responses:
@@ -111,7 +142,7 @@ paths:
       summary: Get Document Regex
       tags:
       - Get Info
-  /api/v1/insertManyDocument/{collection}:
+  /api/v1/insertManyDocument:
     post:
       consumes:
       - application/json
@@ -127,7 +158,7 @@ paths:
         name: params
         required: true
         schema:
-          $ref: '#/definitions/api.MongoInsertManyDocumentBodyTop'
+          $ref: '#/definitions/api.MongoAPIInsertManyDocumentBodyTop'
       produces:
       - application/json
       responses:
@@ -138,7 +169,7 @@ paths:
       summary: Insert Many Document
       tags:
       - Insert Data
-  /api/v1/insertSingleDocument/{collection}:
+  /api/v1/insertSingleDocument:
     post:
       consumes:
       - application/json
@@ -154,7 +185,7 @@ paths:
         name: params
         required: true
         schema:
-          $ref: '#/definitions/api.MongoInsertSingleDocumentBodyTop'
+          $ref: '#/definitions/api.MongoAPIInsertSingleDocumentBodyTop'
       produces:
       - application/json
       responses:
