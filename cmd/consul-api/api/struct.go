@@ -19,7 +19,7 @@ type User struct {
 
 type CommonInterface interface{}
 type CommonMap map[string]interface{}
-type CommonMapSlice map[string]interface{}
+type CommonMapSlice []map[string]interface{}
 type CommonStringSlice []string
 
 type ConsulGetKeyTop struct {
