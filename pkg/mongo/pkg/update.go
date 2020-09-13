@@ -3,7 +3,7 @@ package pkg
 import (
 	"context"
 
-	customLogHandle "github.com/fancyshenmue/golang-gin-sample/pkg/loghandle"
+	customLogHandle "golang-gin-sample/pkg/loghandle"
 
 	"go.mongodb.org/mongo-driver/bson"
 )
