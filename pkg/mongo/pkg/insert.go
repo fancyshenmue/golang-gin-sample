@@ -6,7 +6,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 
-	customLogHandle "github.com/fancyshenmue/golang-gin-sample/pkg/loghandle"
+	customLogHandle "golang-gin-sample/pkg/loghandle"
 )
 
 // InsertSingleDocument | Insert Single Document
