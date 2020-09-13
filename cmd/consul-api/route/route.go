@@ -15,6 +15,7 @@ func Consul(route *gin.Engine) {
 
 	// Query
 	consul.POST("/getKey", consulapi.GetKey)
+	consul.POST("/listKey", consulapi.ListKey)
 
 	// Insert
 	consul.POST("/putKey", consulapi.PutKey)
