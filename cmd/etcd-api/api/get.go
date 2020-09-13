@@ -25,21 +25,20 @@ import (
 // @Router /api/v1/getKey [post]
 func (e *Environment) GetKey(c *gin.Context) {
 	var (
-		ctx = context.TODO()
-		// env  = e.Env
-		body map[string]string
-		key  string
-		m    map[string]interface{}
+		ctx     = context.TODO()
+		reqBody GetETCdKeyTop
+		resBody CommonMap
 	)
 
-	c.BindJSON(&body)
-
-	key = body["key"]
+	if err := c.ShouldBindJSON(&reqBody); err != nil {
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
 
 	kv, cli := customEtcd.ConnectETCD(customEtcdSetup.ETCDConnectInfo, customEtcdSetup.ETCDConnectUser, customEtcdSetup.ETCDConnectPassword)
 	defer cli.Close()
 
-	getresp, err := kv.Get(ctx, key)
+	getresp, err := kv.Get(ctx, reqBody.Key)
 	if err != nil {
 		customLogHandle.ErrorHandle(
 			"GetKey",
@@ -62,14 +61,11 @@ func (e *Environment) GetKey(c *gin.Context) {
 			fmt.Sprintf("Get ETCD Key %v", string(getresp.Kvs[0].Key)),
 		)
 
-		m = make(map[string]interface{})
-		m["key"] = key
-		m["value"] = string(getresp.Kvs[0].Value)
+		resBody = make(map[string]interface{})
+		resBody["key"] = reqBody.Key
+		resBody["value"] = string(getresp.Kvs[0].Value)
 
-		c.JSON(http.StatusOK, gin.H{
-			"status": "Success",
-			"info:":  m,
-		})
+		c.JSON(http.StatusOK, resBody)
 	}
 
 	// key not exist
@@ -99,21 +95,21 @@ func (e *Environment) GetKey(c *gin.Context) {
 // @Router /api/v1/getKeyWithPrefix [post]
 func (e *Environment) GetKeyWithPrefix(c *gin.Context) {
 	var (
-		// env       = e.Env
-		body      map[string]string
-		keyPreifx string
-		m         map[string]interface{}
-		resp      []map[string]interface{}
+		ctx        = context.TODO()
+		reqBody    GetETCdKeyTop
+		resBodyMap CommonMap
+		resBody    CommonMapSlice
 	)
 
-	c.BindJSON(&body)
-
-	keyPreifx = body["prefix"]
+	if err := c.ShouldBindJSON(&reqBody); err != nil {
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
 
 	kv, cli := customEtcd.ConnectETCD(customEtcdSetup.ETCDConnectInfo, customEtcdSetup.ETCDConnectUser, customEtcdSetup.ETCDConnectPassword)
 	defer cli.Close()
 
-	rangeresp, err := kv.Get(context.TODO(), keyPreifx, clientv3.WithPrefix())
+	rangeresp, err := kv.Get(ctx, reqBody.Key, clientv3.WithPrefix())
 	if err != nil {
 		customLogHandle.ErrorHandle(
 			"GetKeyStartsWithPrefix",
@@ -133,20 +129,17 @@ func (e *Environment) GetKeyWithPrefix(c *gin.Context) {
 		customLogHandle.LogInfo(
 			"GetKeyStartsWithPrefix",
 			"Get ETCD Starts With Prefix",
-			fmt.Sprintf("Get ETCD Starts With Prefix: %v", keyPreifx),
+			fmt.Sprintf("Get ETCD Starts With Prefix: %v", reqBody.Key),
 		)
 
 		for _, v := range rangeresp.Kvs {
-			m = make(map[string]interface{})
-			m["key"] = string(v.Key)
-			m["value"] = string(v.Value)
-			resp = append(resp, m)
+			resBodyMap = make(map[string]interface{})
+			resBodyMap["key"] = string(v.Key)
+			resBodyMap["value"] = string(v.Value)
+			resBody = append(resBody, resBodyMap)
 		}
 
-		c.JSON(http.StatusOK, gin.H{
-			"status": "Success",
-			"info:":  resp,
-		})
+		c.JSON(http.StatusOK, resBody)
 	}
 
 	// prefix not exist
