@@ -46,13 +46,16 @@ type MongoAPIInsertManyDocumentBodyTop struct {
 }
 
 type MongoUpdateSingleDocumentBodyTop struct {
-	Name  string
-	Field string
-	Info  interface{}
+	Collection  string      `json:"collection" binding:"required"`
+	FindData    []bson.M    `json:"filter" binding:"required"`
+	Upsert      bool        `json:"upsert"`
+	UpdateField string      `json:"field" binding:"required"`
+	UpdateData  interface{} `json:"data" binding:"required"`
 }
 
 type MongoDeleteSingleDocumentBodyTop struct {
-	Name string
+	Collection string   `json:"collection" binding:"required"`
+	FindData   []bson.M `json:"filter" binding:"required"`
 }
 
 /* end of api */

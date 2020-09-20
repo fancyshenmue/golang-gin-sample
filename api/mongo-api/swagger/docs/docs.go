@@ -29,7 +29,7 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/v1/deleteSingleDocument/{collection}": {
+        "/api/v1/deleteSingleDocument": {
             "delete": {
                 "consumes": [
                     "application/json"
@@ -43,13 +43,6 @@ var doc = `{
                 "summary": "Delete Single Document",
                 "operationId": "1",
                 "parameters": [
-                    {
-                        "type": "string",
-                        "description": "collection",
-                        "name": "collection",
-                        "in": "path",
-                        "required": true
-                    },
                     {
                         "description": "body",
                         "name": "params",
@@ -220,7 +213,7 @@ var doc = `{
                 }
             }
         },
-        "/api/v1/updateSingleDocument/{collection}": {
+        "/api/v1/updateSingleDocument": {
             "put": {
                 "consumes": [
                     "application/json"
@@ -234,13 +227,6 @@ var doc = `{
                 "summary": "Update Single Document",
                 "operationId": "1",
                 "parameters": [
-                    {
-                        "type": "string",
-                        "description": "collection",
-                        "name": "collection",
-                        "in": "path",
-                        "required": true
-                    },
                     {
                         "description": "body",
                         "name": "params",
@@ -333,23 +319,42 @@ var doc = `{
         },
         "api.MongoDeleteSingleDocumentBodyTop": {
             "type": "object",
+            "required": [
+                "collection",
+                "filter"
+            ],
             "properties": {
-                "name": {
+                "collection": {
+                    "type": "string"
+                },
+                "filter": {
                     "type": "string"
                 }
             }
         },
         "api.MongoUpdateSingleDocumentBodyTop": {
             "type": "object",
+            "required": [
+                "collection",
+                "data",
+                "field",
+                "filter"
+            ],
             "properties": {
+                "collection": {
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object"
+                },
                 "field": {
                     "type": "string"
                 },
-                "info": {
-                    "type": "object"
-                },
-                "name": {
+                "filter": {
                     "type": "string"
+                },
+                "upsert": {
+                    "type": "boolean"
                 }
             }
         }

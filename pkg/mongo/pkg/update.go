@@ -6,6 +6,7 @@ import (
 	customLogHandle "golang-gin-sample/pkg/loghandle"
 
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 func (c *MongoUpdateHelper) UpdateSingleDocumentFromMongo() {
@@ -18,12 +19,17 @@ func (c *MongoUpdateHelper) UpdateSingleDocumentFromMongo() {
 	ctx := context.TODO()
 
 	collection := c.Cl.Database(c.Db).Collection(c.Coll)
-	filter := bson.M{"name": bson.M{"$eq": c.FindData}}
-	update := bson.M{"$set": bson.M{c.Field: c.UpdateData}}
+	filter := bson.M{
+		"$and": c.FindData,
+	}
+	update := bson.M{"$set": bson.M{c.UpdateField: c.UpdateData}}
+	opts := options.Update().SetUpsert(c.Upsert)
+
 	_, err := collection.UpdateOne(
 		ctx,
 		filter,
 		update,
+		opts,
 	)
 
 	if err != nil {

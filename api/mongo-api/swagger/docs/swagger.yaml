@@ -48,17 +48,31 @@ definitions:
     type: object
   api.MongoDeleteSingleDocumentBodyTop:
     properties:
-      name:
+      collection:
         type: string
+      filter:
+        type: string
+    required:
+    - collection
+    - filter
     type: object
   api.MongoUpdateSingleDocumentBodyTop:
     properties:
+      collection:
+        type: string
+      data:
+        type: object
       field:
         type: string
-      info:
-        type: object
-      name:
+      filter:
         type: string
+      upsert:
+        type: boolean
+    required:
+    - collection
+    - data
+    - field
+    - filter
     type: object
 host: localhost:8080
 info:
@@ -71,17 +85,12 @@ info:
   title: Mongo RESTful API
   version: "1.0"
 paths:
-  /api/v1/deleteSingleDocument/{collection}:
+  /api/v1/deleteSingleDocument:
     delete:
       consumes:
       - application/json
       operationId: "1"
       parameters:
-      - description: collection
-        in: path
-        name: collection
-        required: true
-        type: string
       - description: body
         in: body
         name: params
@@ -196,17 +205,12 @@ paths:
       summary: Insert Single Document
       tags:
       - Insert Data
-  /api/v1/updateSingleDocument/{collection}:
+  /api/v1/updateSingleDocument:
     put:
       consumes:
       - application/json
       operationId: "1"
       parameters:
-      - description: collection
-        in: path
-        name: collection
-        required: true
-        type: string
       - description: body
         in: body
         name: params

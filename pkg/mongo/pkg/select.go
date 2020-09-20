@@ -122,12 +122,12 @@ func (c *MongoResultHelper) FindDataRegexFromMongo() []bson.M {
 	return episodesFiltered
 }
 
-// ResponseSample | Response Sample
-func ResponseSample(client *mongo.Client, databaseName, collectionName string, findNum int64) []bson.M {
+// ResponseHelper | Response Helper
+func ResponseHelper(client *mongo.Client, databaseName, collectionName string, findNum int64) []bson.M {
 	customLogHandle.LogInfo(
-		"ResponseSample",
-		"select all white label info from mongo",
-		"select all white label info from mongo",
+		"ResponseHelper",
+		"response info info from mongo",
+		"response info info from mongo",
 	)
 
 	var result []bson.M
@@ -142,9 +142,9 @@ func ResponseSample(client *mongo.Client, databaseName, collectionName string, f
 	cur, err := collection.Find(ctx, bson.M{}, findOptions)
 	defer cur.Close(ctx)
 	customLogHandle.ErrorHandle(
-		"ResponseSample",
-		"select all white label info from mongo",
-		"select all white label info from mongo cursor error",
+		"ResponseHelper",
+		"response info info from mongo",
+		"response info info from mongo cursor error",
 		err,
 	)
 
@@ -152,9 +152,9 @@ func ResponseSample(client *mongo.Client, databaseName, collectionName string, f
 		var elem bson.M
 		err := cur.Decode(&elem)
 		customLogHandle.ErrorHandle(
-			"ResponseSample",
-			"select all white label info from mongo",
-			"select all white label info from mongo cursor append error",
+			"ResponseHelper",
+			"response info info from mongo",
+			"response info info from mongo cursor append error",
 			err,
 		)
 
@@ -163,9 +163,9 @@ func ResponseSample(client *mongo.Client, databaseName, collectionName string, f
 
 	err = cur.Err()
 	customLogHandle.ErrorHandle(
-		"ResponseSample",
-		"select all white label info from mongo",
-		"select all white label info from mongo result error",
+		"ResponseHelper",
+		"response info info from mongo",
+		"response info info from mongo result error",
 		err,
 	)
 

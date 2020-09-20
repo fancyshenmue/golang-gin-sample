@@ -1,16 +1,11 @@
 package api
 
 import (
-	"encoding/json"
-	"fmt"
-	"io/ioutil"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"go.mongodb.org/mongo-driver/bson"
 
-	customLogHandle "golang-gin-sample/pkg/loghandle"
-	mongoDatabase "golang-gin-sample/pkg/mongo/pkg"
+	customMongoDatabase "golang-gin-sample/pkg/mongo/pkg"
 	customMongoSetup "golang-gin-sample/pkg/mongo/setup"
 )
 
@@ -21,44 +16,39 @@ import (
 // @version 1.0
 // @accept  json
 // @produce json
-// @param collection path string true "collection"
 // @param params body MongoDeleteSingleDocumentBodyTop true "body"
 // @Success 200 string string
-// @Router /api/v1/deleteSingleDocument/{collection} [delete]
+// @Router /api/v1/deleteSingleDocument [delete]
 func DeleteSingleDocument(c *gin.Context) {
-	body, _ := ioutil.ReadAll(c.Request.Body)
-
-	var data bson.M
-
-	json.Unmarshal(body, &data)
-
-	// check data exist or not
-	query := mongoDatabase.MongoResultHelper{
-		Cl:        mongoClient,
-		Db:        customMongoSetup.MongoDatabase,
-		Coll:      c.Param("collection"),
-		FindField: "name",
-		FindData:  fmt.Sprintf("%v", data["name"]),
-	}
-
-	check, _ := query.FindOneDataFromMongo()
-	customLogHandle.ErrorHandle(
-		"DeleteSingleDocument",
-		"DeleteSingleDocument",
-		"DeleteSingleDocument (Get Mongo Document error)",
-		err,
+	var (
+		reqBody MongoDeleteSingleDocumentBodyTop
+		resBody CommonMap
 	)
 
-	if len(check) == 1 {
-		query.DeleteOneDataFromMongo()
+	if err := c.ShouldBindJSON(&reqBody); err != nil {
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
 
-		c.JSON(http.StatusOK, gin.H{
-			"status": "Success",
-		})
-	} else {
+	// check data exist or not
+	query := customMongoDatabase.MongoResultComplexQueryHelper{
+		Cl:       mongoClient,
+		Db:       customMongoSetup.MongoDatabase,
+		Coll:     reqBody.Collection,
+		FindData: reqBody.FindData,
+	}
+
+	err := query.DeleteDataComplexFromMongo()
+	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"status": "Fail",
 			"info":   "Document Not Exist",
 		})
 	}
+
+	resBody = make(map[string]interface{})
+	resBody["status"] = "success"
+	resBody["query_filter"] = reqBody.FindData
+
+	c.JSON(http.StatusOK, resBody)
 }
