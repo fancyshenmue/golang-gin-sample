@@ -20,13 +20,21 @@ type MongoResultComplexQueryHelper struct {
 	FindData []bson.M
 }
 
+type MongoInsertHelper struct {
+	Cl   *mongo.Client
+	Db   string
+	Coll string
+	Data bson.M
+}
+
 type MongoUpdateHelper struct {
-	Cl         *mongo.Client
-	Db         string
-	Coll       string
-	FindData   string
-	Field      string
-	UpdateData interface{}
+	Cl          *mongo.Client
+	Db          string
+	Coll        string
+	Upsert      bool
+	FindData    []bson.M
+	UpdateField string
+	UpdateData  interface{}
 }
 
 /* auth */

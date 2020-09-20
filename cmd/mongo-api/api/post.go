@@ -31,16 +31,14 @@ func InsertSingleDocument(c *gin.Context) {
 		return
 	}
 
-	// body, _ := ioutil.ReadAll(reqBody.Body)
+	query := customMongoDatabase.MongoInsertHelper{
+		Cl:   mongoClient,
+		Db:   customMongoSetup.MongoDatabase,
+		Coll: reqBody.Collection,
+		Data: reqBody.Body,
+	}
 
-	// json.Unmarshal(body, &MongoAPIInsertSingleDocumentBodyTop.Body)
-
-	customMongoDatabase.InsertSingleDocument(
-		mongoClient,
-		customMongoSetup.MongoDatabase,
-		reqBody.Collection,
-		reqBody.Body,
-	)
+	query.InsertSingleDocument()
 
 	resBody = make(map[string]interface{})
 	resBody["status"] = "Success"
@@ -71,22 +69,15 @@ func InsertManyDocument(c *gin.Context) {
 		return
 	}
 
-	// body, _ := ioutil.ReadAll(c.Request.Body)
-
-	// var (
-	// 	data           []bson.M
-	// 	insertDataInfo []string
-	// )
-
-	// json.Unmarshal(body, &data)
-
 	for _, data := range reqBody.Body {
-		customMongoDatabase.InsertSingleDocument(
-			mongoClient,
-			customMongoSetup.MongoDatabase,
-			reqBody.Collection,
-			data,
-		)
+		query := customMongoDatabase.MongoInsertHelper{
+			Cl:   mongoClient,
+			Db:   customMongoSetup.MongoDatabase,
+			Coll: reqBody.Collection,
+			Data: data,
+		}
+
+		query.InsertSingleDocument()
 	}
 
 	resBody = make(map[string]interface{})

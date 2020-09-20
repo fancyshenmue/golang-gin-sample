@@ -22,10 +22,10 @@ func MongoRoute(route *gin.Engine) {
 	mongo.POST("/insertManyDocument", mongoapi.InsertManyDocument)
 
 	// Update
-	mongo.PUT("/updateSingleDocument/:collection", mongoapi.UpdateSingleDocument)
+	mongo.PUT("/updateSingleDocument", mongoapi.UpdateSingleDocument)
 
 	// DELETE
-	mongo.DELETE("/deleteSingleDocument/:collection", mongoapi.DeleteSingleDocument)
+	mongo.DELETE("/deleteSingleDocument", mongoapi.DeleteSingleDocument)
 }
 
 func MongoAuth(route *gin.Engine) {

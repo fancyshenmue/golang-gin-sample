@@ -27,7 +27,7 @@ import (
 // @host localhost:8080
 // @BasePath /
 func main() {
-	router := gin.Default()
+	router := gin.New()
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
 

@@ -3,14 +3,11 @@ package pkg
 import (
 	"context"
 
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo"
-
 	customLogHandle "golang-gin-sample/pkg/loghandle"
 )
 
 // InsertSingleDocument | Insert Single Document
-func InsertSingleDocument(client *mongo.Client, databaseName, collectionName string, data bson.M) {
+func (c *MongoInsertHelper) InsertSingleDocument() {
 	customLogHandle.LogInfo(
 		"InsertSingleDocument",
 		"Insert Single Document",
@@ -19,9 +16,9 @@ func InsertSingleDocument(client *mongo.Client, databaseName, collectionName str
 
 	ctx := context.TODO()
 
-	collection := client.Database(databaseName).Collection(collectionName)
+	collection := c.Cl.Database(c.Db).Collection(c.Coll)
 
-	_, err := collection.InsertOne(ctx, data)
+	_, err := collection.InsertOne(ctx, c.Data)
 	customLogHandle.ErrorHandle(
 		"InsertSingleDocument",
 		"Insert Single Document",
