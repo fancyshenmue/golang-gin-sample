@@ -96,7 +96,7 @@ func (e *Environment) GetKey(c *gin.Context) {
 func (e *Environment) GetKeyWithPrefix(c *gin.Context) {
 	var (
 		ctx        = context.TODO()
-		reqBody    GetETCdKeyTop
+		reqBody    GetETCdKeyWithPrefixTop
 		resBodyMap CommonMap
 		resBody    CommonMapSlice
 	)
@@ -109,7 +109,7 @@ func (e *Environment) GetKeyWithPrefix(c *gin.Context) {
 	kv, cli := customEtcd.ConnectETCD(customEtcdSetup.ETCDConnectInfo, customEtcdSetup.ETCDConnectUser, customEtcdSetup.ETCDConnectPassword)
 	defer cli.Close()
 
-	rangeresp, err := kv.Get(ctx, reqBody.Key, clientv3.WithPrefix())
+	rangeresp, err := kv.Get(ctx, reqBody.Prefix, clientv3.WithPrefix())
 	if err != nil {
 		customLogHandle.ErrorHandle(
 			"GetKeyStartsWithPrefix",
@@ -129,7 +129,7 @@ func (e *Environment) GetKeyWithPrefix(c *gin.Context) {
 		customLogHandle.LogInfo(
 			"GetKeyStartsWithPrefix",
 			"Get ETCD Starts With Prefix",
-			fmt.Sprintf("Get ETCD Starts With Prefix: %v", reqBody.Key),
+			fmt.Sprintf("Get ETCD Starts With Prefix: %v", reqBody.Prefix),
 		)
 
 		for _, v := range rangeresp.Kvs {
