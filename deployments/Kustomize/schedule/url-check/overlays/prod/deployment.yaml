@@ -8,7 +8,7 @@ spec:
     spec:
       containers:
         - name: schedule-url-check
-          image: gcr.io/are-you-joke-on-me/sre-app/schedule/url-check
+          image: gcr.io/prod-demo/sre-app/schedule/url-check
           env:
           - name: _CONSUL_ENDPOINT
             value: "https://consul.whysoseriousjokeman.com"

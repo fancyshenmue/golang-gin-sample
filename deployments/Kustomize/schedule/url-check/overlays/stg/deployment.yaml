@@ -8,7 +8,7 @@ spec:
     spec:
       containers:
         - name: schedule-url-check
-          image: gcr.io/stg-sports/sre-app/schedule/url-check
+          image: gcr.io/stg-demo/sre-app/schedule/url-check
           env:
           - name: _CONSUL_ENDPOINT
             value: "https://dev-consul.demo.com"
