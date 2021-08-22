@@ -20,8 +20,10 @@ type User struct {
 /* api */
 
 type CommonInterface interface{}
-type CommonMap map[string]interface{}
+type CommonMap bson.M
 type CommonMapSlice []CommonMap
+
+// type CommonMap map[string]interface{}
 
 type MongoAPIGetBodyTop struct {
 	Collection string   `json:"collection" binding:"required"`
@@ -36,13 +38,13 @@ type MongoAPIGetRegexBodyTop struct {
 
 // MongoAPIInsertSingleDocumentBodyTop
 type MongoAPIInsertSingleDocumentBodyTop struct {
-	Collection string                 `json:"collection" binding:"required"`
-	Body       map[string]interface{} `json:"body" binding:"required"`
+	Collection string `json:"collection" binding:"required"`
+	Body       bson.M `json:"body" binding:"required"`
 }
 
 type MongoAPIInsertManyDocumentBodyTop struct {
-	Collection string                   `json:"collection" binding:"required"`
-	Body       []map[string]interface{} `json:"body" binding:"required"`
+	Collection string   `json:"collection" binding:"required"`
+	Body       []bson.M `json:"body" binding:"required"`
 }
 
 type MongoUpdateSingleDocumentBodyTop struct {

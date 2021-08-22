@@ -1,4 +1,5 @@
 vendor/*
 !vendor/vendor.json
-env
+env*
+!env.example
 .env

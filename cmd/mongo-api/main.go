@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"log"
+	"os"
 
 	"github.com/gin-gonic/gin"
 
@@ -43,5 +45,10 @@ func main() {
 	mongoAPIRouters.MongoRoute(router)
 
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-	router.Run(":8080")
+
+	if os.Getenv("APP_PORT") == "" {
+		router.Run(":8080")
+	} else if os.Getenv("APP_PORT") != "" {
+		router.Run(fmt.Sprintf(":%s", os.Getenv("APP_PORT")))
+	}
 }
