@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS `groups` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `gid` VARCHAR(45) NOT NULL,
+  `group_name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `gid_UNIQUE` (`gid` ASC),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  UNIQUE INDEX `group_name_UNIQUE` (`group_name` ASC))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4;
