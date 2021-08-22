@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: schedule-url-check
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - name: schedule-url-check
+          image: gcr.io/dev-demo/sre-app/schedule/url-check
+          env:
+          - name: _CONSUL_ENDPOINT
+            value: "https://dev-consul.demo.com"
+          - name: _CONSUL_KEY_ENDPOINT
+            value: "sre-app/dev/schedule/url-check"
+          - name: _CONSUL_CONFIG_TYPE
+            value: "yaml"
+          - name: CONSUL_HTTP_TOKEN
+            value: "649300cd-a698-705d-dac0-b29ac57c8bec"

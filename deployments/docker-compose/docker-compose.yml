@@ -48,7 +48,7 @@ services:
 
   consul:
     container_name: consul
-    image: consul:1.8.3
+    image: consul
     ports:
       - ${CONSUL_HTTP_PORT}:8500
       - ${CONSUL_DNS_PORT}:8600
@@ -57,6 +57,19 @@ services:
     volumes:
       # - ${CONSUL_MOUNT_CONFIG}:/consul/config
       - ${CONSUL_MOUNT_VOLUME}:/consul/data
+    networks:
+      - local-dev
+
+  mysql:
+    container_name: mysql
+    image: mysql:5.7.35
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+    ports:
+      - ${MYSQL_PORT}:3306
+    volumes:
+      - ${MYSQL_MOUNT_VOLUME}:/var/lib/mysql
     networks:
       - local-dev
 

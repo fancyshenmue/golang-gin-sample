@@ -1,4 +1,4 @@
-package job
+package app
 
 const (
 	CloudFlareZoneInfoCollection       = "cloudflare_zone_info"

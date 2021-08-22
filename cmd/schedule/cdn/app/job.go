@@ -1,4 +1,4 @@
-package job
+package app
 
 import (
 	"encoding/json"
@@ -7,52 +7,13 @@ import (
 	log "github.com/sirupsen/logrus"
 
 	"github.com/cloudflare/cloudflare-go"
-	"github.com/jmoiron/sqlx"
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo"
 
 	customHttp "golang-gin-sample/pkg/http"
 	customLogHandle "golang-gin-sample/pkg/loghandle"
-	customMongo "golang-gin-sample/pkg/mongo/pkg"
 	customMongoDatabase "golang-gin-sample/pkg/mongo/pkg"
 	customMongoSetup "golang-gin-sample/pkg/mongo/setup"
-	customPostgresSetup "golang-gin-sample/pkg/postgres"
 )
-
-var (
-	err            error
-	mongoClient    *mongo.Client
-	postgresClient *sqlx.DB
-)
-
-type CloudflareAuthInfo struct {
-	User    string `db:"user" json:"user" binding:"required"`
-	AuthKey string `db:"auth_key" json:"auth_key" binding:"required"`
-}
-
-func init() {
-	formatter := &log.TextFormatter{
-		FullTimestamp:   true,
-		TimestampFormat: "2006-01-02 15:04:05",
-	}
-	log.SetFormatter(formatter)
-
-	mongoClient, err = customMongo.ConnectToMongo(customMongoSetup.MongoURI, customMongoSetup.Credential)
-	customLogHandle.ErrorHandle(
-		"init",
-		"init",
-		"init (connect mongo error)",
-		err,
-	)
-
-	postgresClient, err = customPostgresSetup.ConnectPostgres()
-	customLogHandle.ErrorHandle(
-		"init",
-		"init",
-		"init (connect postgres error)",
-		err,
-	)
-}
 
 // SyncCloudflareZoneList | Sync Cloudflare Zone list
 func SyncCloudflareZoneList() {

@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: schedule-url-check
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - name: schedule-url-check
+          image: gcr.io/are-you-joke-on-me/sre-app/schedule/url-check
+          env:
+          - name: _CONSUL_ENDPOINT
+            value: "https://consul.whysoseriousjokeman.com"
+          - name: _CONSUL_KEY_ENDPOINT
+            value: "sre-app/prod/schedule/url-check"
+          - name: _CONSUL_CONFIG_TYPE
+            value: "yaml"
+          - name: CONSUL_HTTP_TOKEN
+            value: "1fc03458-84c8-8bd3-45c9-a5bcc6034292"

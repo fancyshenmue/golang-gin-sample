@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: schedule-url-check
+  namespace: default
+  labels:
+    app: schedule-url-check
+spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0%
+  selector:
+    matchLabels:
+      app: schedule-url-check
+  template:
+    metadata:
+      labels:
+        app: schedule-url-check
+    spec:
+      terminationGracePeriodSeconds: 60
+      containers:
+        - name: schedule-url-check
+          image: demo/sre-app/schedule/url-check
+          # readinessProbe:
+          #   tcpSocket:
+          #     port: 8080
+          #   initialDelaySeconds: 5
+          #   periodSeconds: 10
+          #   timeoutSeconds: 1
+          #   successThreshold: 2
+          #   failureThreshold: 3
+          # ports:
+          #   - containerPort: 8080
+          #     name: app
+          #     protocol: "TCP"
+          resources:
+            requests:
+              cpu: "1"
+              memory: "64Mi"
+            limits:
+              cpu: "1"
+              memory: "128Mi"
