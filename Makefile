@@ -1,3 +1,6 @@
+# Define SHELL Environment
+SHELL=/usr/bin/bash
+
 # Define Required Command
 GVM_SCRIPT=${HOME}/.gvm/scripts/gvm
 GVM_CMD=gvm
@@ -32,7 +35,6 @@ build-image: build-binary
 	rm -f $(DOCKER_BUILD_DIR)/$(APP_NAME)
 
 push-image: build-image
-	cd $(DOCKER_BUILD_DIR) && \
 	$(DOCKER_CMD) push $(ENV_DOCKER_IMAGE_TAG):$(COMMIT_TAG)
 
 deploy:

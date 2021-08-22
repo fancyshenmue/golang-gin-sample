@@ -1,3 +1,6 @@
+// global variable
+def agentLabel
+
 properties([
   buildDiscarder(
       logRotator(
@@ -6,8 +9,18 @@ properties([
   )
 ])
 
+if (ENVIRONMENT == "dev") {
+    agentLabel = "build-001"
+} else if (ENVIRONMENT == "stg") {
+    agentLabel = "build-002"
+} else if (ENVIRONMENT == "prod") {
+    agentLabel = "build-002"
+}
+
 pipeline {
-  agent any
+  agent {
+    label agentLabel
+  }
 
   parameters {
     string(name: 'BRANCH',
@@ -15,7 +28,7 @@ pipeline {
       description: 'GIT BRANCH'
     )
     string(name: 'REVISION',
-      defaultValue: 'master',
+      defaultValue: 'HEAD',
       description: 'GIT REVISION'
     )
     choice(name: 'APP_NAME',
@@ -24,7 +37,9 @@ pipeline {
         'cdn-api',
         'consul-api',
         'etcd-api',
-        'mongo-api'
+        'mongo-api',
+        'schedule/cdn',
+        'schedule/url-check',
       ],
       description: 'CHOOSE APP_NAME'
     )
@@ -43,7 +58,6 @@ pipeline {
         'NOTSUPPORT',
         'dev',
         'stg',
-        'uat',
         'prod'
       ],
       description: 'CHOOSE ENVIRONMENT'
@@ -57,7 +71,6 @@ pipeline {
     REVISION                  = "${params.REVISION}"
     // define environment
     ENVIRONMENT               = "${params.ENVIRONMENT}"
-    ENV_APP_NAME              = "${params.APP_NAME}"
     // define action
     ACTION                    = "${params.ACTION}"
     // define workspace
@@ -67,18 +80,54 @@ pipeline {
     ENV_KUSTOMIZE_DIR         = "${WORKSPACE_DIR}/deployments/Kustomize/${params.APP_NAME}/overlays/${params.ENVIRONMENT}"
     // define docker info
     DOCKER_REGISTER           = "https://gcr.io"
-    ENV_DOCKER_IMAGE_TAG_ROOT = "gcr.io/golang-gin-sample"
-    ENV_DOCKER_IMAGE_TAG      = "${ENV_DOCKER_IMAGE_TAG_ROOT}/${params.APP_NAME}"
     // add path
     PATH                      = "${env.PATH}:/usr/local/bin:${env.HOME}/bin"
     // define golang version
-    ENV_GO_VERSION            = "go1.14.3"
+    ENV_GO_VERSION            = "go1.16.7"
   }
 
   stages {
     // setup environment
     stage('Setup Environment') {
       steps {
+        // image tag
+        script {
+          switch(env.ENVIRONMENT) {
+            case 'dev':
+              env.ENV_DOCKER_IMAGE_TAG_ROOT = "gcr.io/dev-demo"
+              env.ENV_DOCKER_IMAGE_TAG      = "gcr.io/dev-demo/sre-app/${params.APP_NAME}"
+              env._GIT_CREDENTIALS_ID       = "jenkins"
+              break
+            case 'stg':
+              env.ENV_DOCKER_IMAGE_TAG_ROOT = "gcr.io/stg-demo"
+              env.ENV_DOCKER_IMAGE_TAG      = "gcr.io/stg-demo/sre-app/${params.APP_NAME}"
+              env._GIT_CREDENTIALS_ID       = "jenkins"
+              break
+            case 'prod':
+              env.ENV_DOCKER_IMAGE_TAG_ROOT = "gcr.io/prod-demo"
+              env.ENV_DOCKER_IMAGE_TAG      = "gcr.io/prod-demo/sre-app/${params.APP_NAME}"
+              env._GIT_CREDENTIALS_ID       = "ci-service"
+              break
+            default:
+              env.ENV_DOCKER_IMAGE_TAG_ROOT = ""
+              env.ENV_DOCKER_IMAGE_TAG      = ""
+              env._GIT_CREDENTIALS_ID       = ""
+              break
+          }
+        }
+
+        // app name
+        script {
+          switch(params.APP_NAME) {
+            case ~/schedule\/(.*)/:
+              env.ENV_APP_NAME         = "${params.APP_NAME}".split("/")[-1]
+              break
+            default:
+              env.ENV_APP_NAME         = "${params.APP_NAME}"
+              break
+          }
+        }
+
         // block if selected ENVIRONMENT not supported
         script {
           if (params.ENVIRONMENT == "NOTSUPPORT") {
@@ -118,27 +167,77 @@ pipeline {
         }
 
         // git repo info
-        sh("echo Git Repo: ${GIT_REPO}")
-        sh("echo Branch: ${BRANCH}")
-        sh("echo Revision: ${REVISION}")
+        sh(
+          label:  "Git Repo: ${GIT_REPO}",
+          script: "echo Git Repo: ${GIT_REPO}"
+        )
+        sh(
+          label:  "Branch: ${BRANCH}",
+          script: "echo Branch: ${BRANCH}"
+        )
+        sh(
+          label:  "Revision: ${REVISION}",
+          script: "echo Revision: ${REVISION}"
+        )
         // environment
-        sh("echo Environment: ${ENVIRONMENT}")
-        sh("echo APP name: ${APP_NAME}")
+        sh(
+          label:  "Environment: ${ENVIRONMENT}",
+          script: "echo Environment: ${ENVIRONMENT}"
+        )
+        // app info
+        sh(
+          label:  "APP name: ${APP_NAME}",
+          script: "echo APP name: ${APP_NAME}"
+        )
+        sh(
+          label:  "APP Build name: ${ENV_APP_NAME}",
+          script: "echo APP Build name: ${ENV_APP_NAME}"
+        )
         // action
-        sh("echo Action: ${ACTION}")
+        sh(
+          label:  "Action: ${ACTION}",
+          script: "echo Action: ${ACTION}"
+        )
         // workspace
-        sh("echo Workspace: ${WORKSPACE_DIR}")
-        sh("echo Application Build Directory: ${ENV_APP_BUILD_DIR}")
-        sh("echo Docker Build Directory: ${ENV_DOCKER_BUILD_DIR}")
-        sh("echo Kustomize Build Directory: ${ENV_KUSTOMIZE_DIR}")
+        sh(
+          label:  "Workspace: ${WORKSPACE_DIR}",
+          script: "echo Workspace: ${WORKSPACE_DIR}"
+        )
+        sh(
+          label:  "Application Build Directory: ${ENV_APP_BUILD_DIR}",
+          script: "echo Application Build Directory: ${ENV_APP_BUILD_DIR}"
+        )
+        sh(
+          label:  "Docker Build Directory: ${ENV_DOCKER_BUILD_DIR}",
+          script: "echo Docker Build Directory: ${ENV_DOCKER_BUILD_DIR}"
+        )
+        sh(
+          label:  "Kustomize Build Directory: ${ENV_KUSTOMIZE_DIR}",
+          script: "echo Kustomize Build Directory: ${ENV_KUSTOMIZE_DIR}"
+        )
         // docker info
-        sh("echo Docker Register: ${DOCKER_REGISTER}")
-        sh("echo Docker Image Tag Root: ${ENV_DOCKER_IMAGE_TAG_ROOT}")
-        sh("echo Docker Image Tag: ${ENV_DOCKER_IMAGE_TAG}")
+        sh(
+          label:  "Docker Register: ${DOCKER_REGISTER}",
+          script: "echo Docker Register: ${DOCKER_REGISTER}"
+        )
+        sh(
+          label:  "Docker Image Tag Root: ${ENV_DOCKER_IMAGE_TAG_ROOT}",
+          script: "echo Docker Image Tag Root: ${ENV_DOCKER_IMAGE_TAG_ROOT}"
+        )
+        sh(
+          label:  "Docker Image Tag: ${ENV_DOCKER_IMAGE_TAG}",
+          script: "echo Docker Image Tag: ${ENV_DOCKER_IMAGE_TAG}"
+        )
         // path
-        sh("echo Path: ${PATH}")
+        sh(
+          label:  "Path: ${PATH}",
+          script: "echo Path: ${PATH}"
+        )
         // golang version
-        sh("echo Go Version: ${ENV_GO_VERSION}")
+        sh(
+          label:  "Go Version: ${ENV_GO_VERSION}",
+          script: "echo Go Version: ${ENV_GO_VERSION}"
+        )
       }
     } // end of setup environment
 
@@ -147,11 +246,16 @@ pipeline {
       steps {
         dir(WORKSPACE_DIR) {
           git url: "${GIT_REPO}",
-              credentialsId: 'gitlab',
+              credentialsId: "${_GIT_CREDENTIALS_ID}",
               branch: "${BRANCH}"
         }
 
-        sh("git checkout ${REVISION}")
+        dir(WORKSPACE_DIR) {
+          sh(
+            label:  "git checkout ${REVISION}",
+            script: "git checkout ${REVISION}"
+          )
+        }
       }
     } // end of stage
 
@@ -159,17 +263,22 @@ pipeline {
     stage('Build') {
       steps {
         dir(WORKSPACE_DIR) {
-          sh("make ${ACTION}")
+          sh(
+            label:  "Action: ${ACTION}",
+            script: "make ${ACTION}"
+          )
         }
       }
     }
+  }
 
-    stage('Cleanup') {
-      steps {
-        dir(WORKSPACE_DIR) {
-          deleteDir()
-        }
+  post {
+    /* clean up our workspace */
+    always {
+      dir(WORKSPACE_DIR) {
+        deleteDir()
       }
     }
+    /* end of clean up our workspace */
   }
 }

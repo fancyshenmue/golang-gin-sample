@@ -1,0 +1,35 @@
+# MONGO
+mongo:
+  mongo_address: 127.0.0.1:27017
+  mongo_user: root
+  mongo_pass: example
+  mongo_database: sample
+
+# POSTGRES
+postgres:
+  pg_db_user: postgres
+  pg_db_pass: example
+  pg_db_addr: "127.0.0.1"
+  pg_db_port: 5432
+  pg_db_name: sample
+
+# CLOUDFLARE
+cloudflare:
+  cloudflare_authkey: xxxxxxxxxxxxxxxx
+  cloudflare_email: xxxxxx@xxxxxx.xxx
+
+# GREYCDN
+greycdn:
+  greycdn_token: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+
+# VERIZON CDN
+verizon:
+  verizon_cdn_token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  verizon_cdn_account_number: XXXXX
+  verizon_api_url_root: "https://api.edgecast.com/v2/mcc/customers"
+
+# SCHEDULE
+schedule:
+  sync_cloudflare_zone_list_cron: "0 0 3 * * ?"
+  sync_cloudflare_zone_record: "0 10 3 * * ?"
+  sync_verizon_http_large_list: "0 0 3 * * ?"

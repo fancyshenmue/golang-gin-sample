@@ -1,0 +1,5 @@
+commonLabels:
+  app: "schedule-url-check"
+
+resources:
+  - deployment.yaml

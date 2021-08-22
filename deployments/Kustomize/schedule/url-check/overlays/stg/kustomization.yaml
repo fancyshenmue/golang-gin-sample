@@ -1,0 +1,10 @@
+namespace: sre
+
+commonLabels:
+  app: schedule-url-check
+
+resources:
+- ../../base
+
+patchesStrategicMerge:
+- deployment.yaml
