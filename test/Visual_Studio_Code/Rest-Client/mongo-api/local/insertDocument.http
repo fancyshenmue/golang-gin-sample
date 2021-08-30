@@ -1,0 +1,41 @@
+@requestURL = http://127.0.0.1:58080/api/v1/insertDocument
+# @jwt_token = MongoAPI
+@collection = demo
+
+POST {{ requestURL }} HTTP/1.1
+Content-Type: application/json
+# Authorization: {{ jwt_token }}
+
+{
+    "collection": "{{ collection }}",
+    "data": {
+        "env" : "demo",
+        "name" : "demo",
+        "appDownload" : {
+            "doamin" : [
+                "android.demo.com",
+                "ios.demo.com"
+            ],
+            "path" : "demopath"
+        },
+        "domain" : [
+            {
+                "domain" : [
+                    "www.demo.com",
+                    "www.demo2.com",
+                    "www.demo3.com"
+                ],
+                "type" : "demoweb"
+            },
+            {
+                "domain" : [
+                    "api.demo.com",
+                    "api.demo2.com",
+                    "api.demo3.com"
+                ],
+                "type" : "demoapi"
+            }
+        ],
+        "type" : "demodomain"
+    }
+}

@@ -1,0 +1,17 @@
+@requestURL = http://127.0.0.1:58080/api/v1/getDocument
+# @jwt_token = MongoAPI
+@collection = demo
+
+POST {{ requestURL }} HTTP/1.1
+Content-Type: application/json
+# Authorization: {{ jwt_token }}
+
+{
+    "collection": "{{ collection }}",
+    "data": [
+        {
+            "env": "demo",
+            "type": "demodomain2"
+        }
+    ]
+}

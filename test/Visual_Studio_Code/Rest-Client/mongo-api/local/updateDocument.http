@@ -1,0 +1,27 @@
+@requestURL = http://127.0.0.1:58080/api/v1/updateDocument
+# @jwt_token = MongoAPI
+@collection = demo
+
+PUT {{ requestURL }} HTTP/1.1
+Content-Type: application/json
+# Authorization: {{ jwt_token }}
+
+{
+    "collection": "{{ collection }}",
+    "filter": [
+        {
+            "env" : "demo",
+            "name" : "demo"
+        }
+    ],
+    "field": "appDownload",
+    "data": {
+        "doamin" : [
+            "android.demo.com",
+            "ios.demo.com",
+            "ios.demo2.com"
+        ],
+        "path" : "demopath"
+    },
+    "upsert": true
+}

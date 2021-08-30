@@ -1,4 +1,0 @@
-ALTER TABLE `accounts`
-ADD COLUMN `uid` INT(11) NOT NULL AFTER `id`,
-ADD UNIQUE INDEX `uid_UNIQUE` (`uid` ASC);
-;

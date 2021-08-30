@@ -1,0 +1,18 @@
+@requestURL = http://127.0.0.1:58080/api/v1/deleteDocument
+# @jwt_token = MongoAPI
+@collection = demo
+
+DELETE {{ requestURL }} HTTP/1.1
+Content-Type: application/json
+Authorization: {{ jwt_token }}
+
+{
+    "collection": "{{ collection }}",
+    "filter": [
+        {
+            "type" : "demodomain",
+            "env" : "demo",
+            "name" : "demo"
+        }
+    ]
+}

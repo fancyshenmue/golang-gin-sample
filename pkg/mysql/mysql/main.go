@@ -13,7 +13,7 @@ import (
 	_ "github.com/golang-migrate/migrate/source/file"
 	"github.com/spf13/viper"
 
-	customMySQL "golang-gin-sample/pkg/mysql"
+	customMySQL "sre-app/pkg/mysql"
 )
 
 var (
@@ -68,10 +68,7 @@ func init() {
 func main() {
 	driver, err := mysql.WithInstance(db, &mysql.Config{})
 	if err != nil {
-		log.WithFields(log.Fields{
-			"status": false,
-			"type":   "MySQL",
-		}).Fatalf("Drive Initial Failed: %v\n", err)
+		log.Fatalf("%v\n", err)
 	}
 
 	m, err := migrate.NewWithDatabaseInstance(
@@ -80,10 +77,7 @@ func main() {
 		driver,
 	)
 	if err != nil {
-		log.WithFields(log.Fields{
-			"status": false,
-			"type":   "MySQL",
-		}).Fatalf("Migrate Failed: %v\n", err)
+		log.Fatalf("%v\n", err)
 	}
 
 	m.Steps(DBMigrate)

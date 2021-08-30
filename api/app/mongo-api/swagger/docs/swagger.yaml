@@ -1,0 +1,169 @@
+definitions:
+  app.DeleteDocumentBody:
+    properties:
+      collection:
+        type: string
+      data:
+        items:
+          additionalProperties: true
+          type: object
+        type: array
+      filter:
+        items:
+          additionalProperties: true
+          type: object
+        type: array
+      status:
+        type: string
+    required:
+    - collection
+    - filter
+    type: object
+  app.FindDocumentBody:
+    properties:
+      collection:
+        type: string
+      data:
+        items:
+          additionalProperties: true
+          type: object
+        type: array
+      status:
+        type: string
+    required:
+    - collection
+    - data
+    type: object
+  app.InsertDocumentBody:
+    properties:
+      collection:
+        type: string
+      data:
+        additionalProperties: true
+        type: object
+      status:
+        type: string
+    required:
+    - collection
+    - data
+    type: object
+  app.UpdateDocumentBody:
+    properties:
+      collection:
+        type: string
+      data:
+        type: object
+      field:
+        type: string
+      filter:
+        items:
+          additionalProperties: true
+          type: object
+        type: array
+      status:
+        type: string
+      upsert:
+        type: boolean
+    required:
+    - collection
+    - data
+    - field
+    - filter
+    type: object
+info:
+  contact: {}
+paths:
+  /api/v1/FindDocument:
+    post:
+      consumes:
+      - application/json
+      operationId: "1"
+      parameters:
+      - description: body
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/app.FindDocumentBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Find Document
+      tags:
+      - Get Info
+  /api/v1/deleteDocument:
+    delete:
+      consumes:
+      - application/json
+      operationId: "4"
+      parameters:
+      - description: body
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/app.DeleteDocumentBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete Document
+      tags:
+      - Delete Data
+  /api/v1/insertDocument:
+    post:
+      consumes:
+      - application/json
+      operationId: "2"
+      parameters:
+      - description: collection
+        in: path
+        name: collection
+        required: true
+        type: string
+      - description: body
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/app.InsertDocumentBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Insert Document
+      tags:
+      - Insert Data
+  /api/v1/updateDocument:
+    put:
+      consumes:
+      - application/json
+      operationId: "3"
+      parameters:
+      - description: body
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/app.UpdateDocumentBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Update Document
+      tags:
+      - Update Data
+swagger: "2.0"
