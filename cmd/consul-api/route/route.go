@@ -3,7 +3,7 @@ package route
 import (
 	"github.com/gin-gonic/gin"
 
-	consulapi "golang-gin-sample/cmd/consul-api/api"
+	consulapi "github.com/fancyshenmue/golang-gin-sample/cmd/consul-api/api"
 )
 
 func Consul(route *gin.Engine) {

@@ -5,9 +5,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	customLogHandle "golang-gin-sample/pkg/loghandle"
-	customMongoDatabase "golang-gin-sample/pkg/mongo/pkg"
-	customMongoSetup "golang-gin-sample/pkg/mongo/setup"
+	customLogHandle "github.com/fancyshenmue/golang-gin-sample/pkg/loghandle"
+	customMongoDatabase "github.com/fancyshenmue/golang-gin-sample/pkg/mongo/pkg"
+	customMongoSetup "github.com/fancyshenmue/golang-gin-sample/pkg/mongo/setup"
 )
 
 // GetDocument | Get Document

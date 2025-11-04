@@ -5,10 +5,10 @@ import (
 	log "github.com/sirupsen/logrus"
 	"go.mongodb.org/mongo-driver/mongo"
 
-	customConsul "golang-gin-sample/pkg/consul"
-	customLogHandle "golang-gin-sample/pkg/loghandle"
-	customMongo "golang-gin-sample/pkg/mongo/pkg"
-	customMongoSetup "golang-gin-sample/pkg/mongo/setup"
+	customConsul "github.com/fancyshenmue/golang-gin-sample/pkg/consul"
+	customLogHandle "github.com/fancyshenmue/golang-gin-sample/pkg/loghandle"
+	customMongo "github.com/fancyshenmue/golang-gin-sample/pkg/mongo/pkg"
+	customMongoSetup "github.com/fancyshenmue/golang-gin-sample/pkg/mongo/setup"
 )
 
 var (

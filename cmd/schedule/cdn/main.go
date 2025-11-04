@@ -1,7 +1,7 @@
 package main
 
 import (
-	customApp "golang-gin-sample/cmd/schedule/cdn/app"
+	customApp "github.com/fancyshenmue/golang-gin-sample/cmd/schedule/cdn/app"
 
 	cron "github.com/robfig/cron/v3"
 )

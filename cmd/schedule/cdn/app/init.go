@@ -2,9 +2,9 @@ package app
 
 import (
 	"fmt"
-	customLogHandle "golang-gin-sample/pkg/loghandle"
-	customMongo "golang-gin-sample/pkg/mongo/pkg"
-	customPostgresSetup "golang-gin-sample/pkg/postgres"
+	customLogHandle "github.com/fancyshenmue/golang-gin-sample/pkg/loghandle"
+	customMongo "github.com/fancyshenmue/golang-gin-sample/pkg/mongo/pkg"
+	customPostgresSetup "github.com/fancyshenmue/golang-gin-sample/pkg/postgres"
 
 	"os"
 

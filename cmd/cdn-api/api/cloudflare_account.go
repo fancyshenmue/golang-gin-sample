@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"net/http"
 
-	customHttp "golang-gin-sample/pkg/http"
-	customLogHandle "golang-gin-sample/pkg/loghandle"
+	customHttp "github.com/fancyshenmue/golang-gin-sample/pkg/http"
+	customLogHandle "github.com/fancyshenmue/golang-gin-sample/pkg/loghandle"
 
 	"github.com/gin-gonic/gin"
 )

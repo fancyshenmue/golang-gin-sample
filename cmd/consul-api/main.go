@@ -5,15 +5,15 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	_ "golang-gin-sample/api/consul-api/swagger/docs"
+	_ "github.com/fancyshenmue/golang-gin-sample/api/consul-api/swagger/docs"
 
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 
 	jwt "github.com/appleboy/gin-jwt/v2"
 
-	consulapi "golang-gin-sample/cmd/consul-api/api"
-	consulAPIRouters "golang-gin-sample/cmd/consul-api/route"
+	consulapi "github.com/fancyshenmue/golang-gin-sample/cmd/consul-api/api"
+	consulAPIRouters "github.com/fancyshenmue/golang-gin-sample/cmd/consul-api/route"
 )
 
 // @title Consul RESTful API

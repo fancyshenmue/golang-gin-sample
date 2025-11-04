@@ -3,7 +3,7 @@ package route
 import (
 	"github.com/gin-gonic/gin"
 
-	cdnapi "golang-gin-sample/cmd/cdn-api/api"
+	cdnapi "github.com/fancyshenmue/golang-gin-sample/cmd/cdn-api/api"
 )
 
 func CDNAPIVerizon(route *gin.Engine) {

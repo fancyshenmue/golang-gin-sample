@@ -9,8 +9,8 @@ import (
 	"net/url"
 	"strings"
 
-	customHttp "golang-gin-sample/pkg/http"
-	customLogHandle "golang-gin-sample/pkg/loghandle"
+	customHttp "github.com/fancyshenmue/golang-gin-sample/pkg/http"
+	customLogHandle "github.com/fancyshenmue/golang-gin-sample/pkg/loghandle"
 
 	"github.com/cloudflare/cloudflare-go"
 	"github.com/gin-gonic/gin"

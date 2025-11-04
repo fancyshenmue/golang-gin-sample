@@ -9,10 +9,10 @@ import (
 	"github.com/cloudflare/cloudflare-go"
 	"go.mongodb.org/mongo-driver/bson"
 
-	customHttp "golang-gin-sample/pkg/http"
-	customLogHandle "golang-gin-sample/pkg/loghandle"
-	customMongoDatabase "golang-gin-sample/pkg/mongo/pkg"
-	customMongoSetup "golang-gin-sample/pkg/mongo/setup"
+	customHttp "github.com/fancyshenmue/golang-gin-sample/pkg/http"
+	customLogHandle "github.com/fancyshenmue/golang-gin-sample/pkg/loghandle"
+	customMongoDatabase "github.com/fancyshenmue/golang-gin-sample/pkg/mongo/pkg"
+	customMongoSetup "github.com/fancyshenmue/golang-gin-sample/pkg/mongo/setup"
 )
 
 // SyncCloudflareZoneList | Sync Cloudflare Zone list

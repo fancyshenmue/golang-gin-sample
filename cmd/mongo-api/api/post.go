@@ -5,8 +5,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	customMongoDatabase "golang-gin-sample/pkg/mongo/pkg"
-	customMongoSetup "golang-gin-sample/pkg/mongo/setup"
+	customMongoDatabase "github.com/fancyshenmue/golang-gin-sample/pkg/mongo/pkg"
+	customMongoSetup "github.com/fancyshenmue/golang-gin-sample/pkg/mongo/setup"
 )
 
 // InsertSingleDocument | Insert Single Document

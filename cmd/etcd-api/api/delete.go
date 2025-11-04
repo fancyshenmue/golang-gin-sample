@@ -4,9 +4,9 @@ import (
 	"context"
 	"net/http"
 
-	customEtcd "golang-gin-sample/pkg/etcd/pkg"
-	customEtcdSetup "golang-gin-sample/pkg/etcd/setup"
-	customLogHandle "golang-gin-sample/pkg/loghandle"
+	customEtcd "github.com/fancyshenmue/golang-gin-sample/pkg/etcd/pkg"
+	customEtcdSetup "github.com/fancyshenmue/golang-gin-sample/pkg/etcd/setup"
+	customLogHandle "github.com/fancyshenmue/golang-gin-sample/pkg/loghandle"
 
 	"github.com/gin-gonic/gin"
 )

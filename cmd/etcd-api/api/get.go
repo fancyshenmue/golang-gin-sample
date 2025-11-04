@@ -8,9 +8,9 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.etcd.io/etcd/clientv3"
 
-	customEtcd "golang-gin-sample/pkg/etcd/pkg"
-	customEtcdSetup "golang-gin-sample/pkg/etcd/setup"
-	customLogHandle "golang-gin-sample/pkg/loghandle"
+	customEtcd "github.com/fancyshenmue/golang-gin-sample/pkg/etcd/pkg"
+	customEtcdSetup "github.com/fancyshenmue/golang-gin-sample/pkg/etcd/setup"
+	customLogHandle "github.com/fancyshenmue/golang-gin-sample/pkg/loghandle"
 )
 
 // GetKey | Get Key

@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	customLogHandle "golang-gin-sample/pkg/loghandle"
+	customLogHandle "github.com/fancyshenmue/golang-gin-sample/pkg/loghandle"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
