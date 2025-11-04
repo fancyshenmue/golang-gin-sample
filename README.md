@@ -1,41 +1,321 @@
-## Project Directories
+# Golang Gin Sample - Clean Architecture
 
-### `/cmd`
+A unified RESTful API built with Go, Gin framework, and Clean Architecture principles.
 
-Main applications for this project.
+## Overview
 
-The directory name for each application should match the name of the executable you want to have (e.g., `/cmd/myapp`).
+This project demonstrates a production-ready microservices architecture following Clean Architecture principles. It provides a unified API with support for MongoDB, Etcd, Consul, and CDN operations.
 
-Don't put a lot of code in the application directory. If you think the code can be imported and used in other projects, then it should live in the `/pkg` directory. If the code is not reusable or if you don't want others to reuse it, put that code in the `/internal` directory. You'll be surprised what others will do, so be explicit about your intentions!
+## Architecture
 
-It's common to have a small `main` function that imports and invokes the code from the `/internal` and `/pkg` directories and nothing else.
+This application follows **Clean Architecture** with clear separation of concerns:
 
+```
+┌─────────────────────────────────────────────────────────┐
+│                    DOMAIN LAYER                         │
+│          (Entities, Repository Interfaces)              │
+│                  NO DEPENDENCIES                        │
+└─────────────────────┬───────────────────────────────────┘
+                      ↑
+┌─────────────────────┴───────────────────────────────────┐
+│                   USE CASE LAYER                        │
+│           (Application Business Logic)                  │
+└─────────────────────┬───────────────────────────────────┘
+                      ↑
+┌─────────────────────┴───────────────────────────────────┐
+│                   ADAPTER LAYER                         │
+│         (HTTP Handlers, Presenters)                     │
+└─────────────────────┬───────────────────────────────────┘
+                      ↑
+┌─────────────────────┴───────────────────────────────────┐
+│                INFRASTRUCTURE LAYER                     │
+│     (Database, External APIs, Frameworks)               │
+└─────────────────────────────────────────────────────────┘
+```
 
-### `/pkg`
+See [CLEAN_ARCHITECTURE.md](./CLEAN_ARCHITECTURE.md) for detailed documentation.
 
-Library code that's ok to use by external applications (e.g., `/pkg/mypubliclib`). Other projects will import these libraries expecting them to work, so think twice before you put something here :-) Note that the `internal` directory is a better way to ensure your private packages are not importable because it's enforced by Go. The `/pkg` directory is still a good way to explicitly communicate that the code in that directory is safe for use by others. The [`I'll take pkg over internal`](https://travisjeffery.com/b/2019/11/i-ll-take-pkg-over-internal/) blog post by Travis Jeffery provides a good overview of the `pkg` and `internal` directories and when it might make sense to use them.
+## Features
 
-It's also a way to group Go code in one place when your root directory contains lots of non-Go components and directories making it easier to run various Go tools (as mentioned in these talks: [`Best Practices for Industrial Programming`](https://www.youtube.com/watch?v=PTE4VJIdHPg) from GopherCon EU 2018, [GopherCon 2018: Kat Zien - How Do You Structure Your Go Apps](https://www.youtube.com/watch?v=oL6JBUk6tj0) and [GoLab 2018 - Massimiliano Pippi - Project layout patterns in Go](https://www.youtube.com/watch?v=3gQa1LWwuzk)).
+- ✅ **Clean Architecture** - Maintainable, testable, and scalable
+- ✅ **Unified API** - Single service with multiple endpoints
+- ✅ **MongoDB Support** - Document database operations
+- ✅ **Etcd Support** - Distributed configuration management
+- ✅ **Consul Support** - Service discovery and KV store
+- ✅ **JWT Authentication** - Secure token-based auth
+- ✅ **Swagger Documentation** - Interactive API docs
+- ✅ **Docker Ready** - Containerized deployment
+- ✅ **Kubernetes Ready** - K8s deployment with Kustomize
 
-See the [`/pkg`](pkg/README.md) directory if you want to see which popular Go repos use this project layout pattern. This is a common layout pattern, but it's not universally accepted and some in the Go community don't recommend it.
+## Directory Structure
 
-Ok not to use it if your app project is really small and where an extra level of nesting doesn't add much value (unless you really want to :-)). Think about it when it's getting big enough and your root directory gets pretty busy (especially if you have a lot of non-Go app components).
+```
+.
+├── cmd/api/                    # Application entry point
+│   └── main.go                 # Unified API server
+├── internal/                   # Private application code
+│   ├── domain/                 # Domain layer (entities & interfaces)
+│   ├── usecase/                # Use case layer (business logic)
+│   ├── adapter/                # Adapter layer (handlers & middleware)
+│   └── infrastructure/         # Infrastructure layer (DB, clients, config)
+├── pkg/                        # Public shared utilities
+│   ├── errorhandle/           # Error handling utilities
+│   ├── http/                  # HTTP utilities
+│   ├── loghandle/             # Logging utilities
+│   └── validation/            # Input validation
+├── api/                        # OpenAPI/Swagger specs
+├── build/                      # Build configurations
+├── deployments/                # Deployment manifests
+└── migrations/                 # Database migrations
+```
 
+## Quick Start
 
-### `/build`
+### Prerequisites
 
-Packaging and Continuous Integration.
+- Go 1.16+
+- MongoDB (optional - for MongoDB endpoints)
+- Etcd (optional - for Etcd endpoints)
+- Consul (optional - for Consul endpoints)
 
-Put your cloud (AMI), container (Docker), OS (deb, rpm, pkg) package configurations and scripts in the `/build/package` directory.
+### Environment Variables
 
-Put your CI (travis, circle, drone) configurations and scripts in the `/build/ci` directory. Note that some of the CI tools (e.g., Travis CI) are very picky about the location of their config files. Try putting the config files in the `/build/ci` directory linking them to the location where the CI tools expect them (when possible).
+```bash
+# MongoDB Configuration (required for /api/v1/mongo endpoints)
+export MONGO_ADDRESS="localhost:27017"
+export MONGO_USER="admin"
+export MONGO_PASS="password"
+export MONGO_DATABASE="test"
 
+# JWT Configuration (required)
+export JWT_KEY="your-secret-key"
+export JWT_REALM="api"
+export JWT_TOKEN_HEADER="Bearer"
 
-### `/deployments`
+# Etcd Configuration (optional)
+export ETCD_ENDPOINTS="localhost:2379"
+export ETCD_CONNECT_USER=""
+export ETCD_CONNECT_PASSWD=""
 
-IaaS, PaaS, system and container orchestration deployment configurations and templates (docker-compose, kubernetes/helm, mesos, terraform, bosh). Note that in some repos (especially apps deployed with kubernetes) this directory is called `/deploy`.
+# Consul Configuration (optional)
+export CONSUL_ADDRESS="localhost:8500"
+export CONSUL_TOKEN=""
 
+# Server Configuration
+export APP_PORT="8080"
+```
 
-### `/api`
+### Run Locally
 
-OpenAPI/Swagger specs, JSON schema files, protocol definition files.
+```bash
+# Install dependencies
+go mod download
+
+# Run the application
+go run cmd/api/main.go
+```
+
+The server will start on http://localhost:8080
+
+### API Documentation
+
+Visit http://localhost:8080/swagger/index.html for interactive API documentation.
+
+### Health Check
+
+```bash
+curl http://localhost:8080/health
+```
+
+Response:
+```json
+{
+  "status": "healthy",
+  "services": {
+    "mongodb": "connected",
+    "etcd": "available",
+    "consul": "available"
+  }
+}
+```
+
+## API Endpoints
+
+### Authentication
+
+All API endpoints (except `/auth/*`, `/health`, and `/`) require JWT authentication.
+
+```bash
+# Login
+POST /auth/login
+{
+  "username": "user",
+  "password": "pass"
+}
+
+# Refresh Token
+GET /auth/refresh_token
+
+# Logout
+POST /auth/logout
+```
+
+### MongoDB Operations
+
+```bash
+# Get Documents
+POST /api/v1/mongo/getDocument
+{
+  "database": "test",
+  "collection": "users",
+  "filter": {"status": "active"},
+  "limit": 10
+}
+
+# Insert Single Document
+POST /api/v1/mongo/insertSingleDocument
+
+# Insert Many Documents
+POST /api/v1/mongo/insertManyDocument
+
+# Update Document
+PUT /api/v1/mongo/updateSingleDocument
+
+# Delete Document
+DELETE /api/v1/mongo/deleteSingleDocument
+```
+
+### Etcd Operations
+
+```bash
+# Get Key
+POST /api/v1/etcd/getKey
+
+# Get Keys with Prefix
+POST /api/v1/etcd/getKeyWithPrefix
+
+# Put Key
+POST /api/v1/etcd/putKey
+
+# Delete Key
+DELETE /api/v1/etcd/deleteKey
+```
+
+### Consul Operations
+
+```bash
+# Get Key
+POST /api/v1/consul/getKey
+
+# List Keys
+POST /api/v1/consul/listKey
+
+# Put Key
+POST /api/v1/consul/putKey
+
+# Delete Key
+DELETE /api/v1/consul/deleteKey
+```
+
+## Docker
+
+### Build Docker Image
+
+```bash
+# Build binary
+CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o api cmd/api/main.go
+
+# Build image
+docker build -t golang-gin-sample:latest -f build/Docker/api/Dockerfile .
+```
+
+### Run with Docker
+
+```bash
+docker run -p 8080:8080 \
+  -e MONGO_ADDRESS="mongodb:27017" \
+  -e JWT_KEY="secret" \
+  golang-gin-sample:latest
+```
+
+### Docker Compose
+
+```bash
+cd deployments/docker-compose
+docker-compose up -d
+```
+
+## Kubernetes Deployment
+
+```bash
+# Deploy with Kustomize
+kubectl apply -k deployments/Kustomize/api/
+
+# Check status
+kubectl get pods
+kubectl get svc
+```
+
+## Development
+
+### Project Structure
+
+- **Domain Layer** (`internal/domain/`) - Core business logic, entities, and repository interfaces
+- **Use Case Layer** (`internal/usecase/`) - Application-specific business rules
+- **Adapter Layer** (`internal/adapter/`) - HTTP handlers, middleware, presenters
+- **Infrastructure Layer** (`internal/infrastructure/`) - Database implementations, external clients
+
+### Adding a New Feature
+
+1. **Define Entity** in `internal/domain/entity/`
+2. **Define Repository Interface** in `internal/domain/repository/`
+3. **Implement Use Case** in `internal/usecase/`
+4. **Implement Repository** in `internal/infrastructure/`
+5. **Create Handler** in `internal/adapter/handler/http/`
+6. **Register Routes** in `cmd/api/main.go`
+
+### Testing
+
+```bash
+# Run tests
+go test ./...
+
+# Run tests with coverage
+go test -cover ./...
+
+# Run specific package tests
+go test ./internal/usecase/auth/...
+```
+
+## Benefits of Clean Architecture
+
+✅ **Testability** - Business logic can be tested without HTTP or database
+✅ **Flexibility** - Easy to swap database or framework implementations
+✅ **Maintainability** - Clear separation of concerns
+✅ **Scalability** - Well-organized structure for growing codebase
+✅ **Independence** - Domain logic is independent of frameworks
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License.
+
+## Author
+
+Charles Hsu (fancyshenmue@gmail.com)
+
+## Documentation
+
+- [Clean Architecture Guide](./CLEAN_ARCHITECTURE.md) - Comprehensive architecture documentation
+- [API Documentation](http://localhost:8080/swagger/index.html) - Swagger UI (when server is running)
+
+## Support
+
+For issues, questions, or contributions, please open an issue on GitHub.

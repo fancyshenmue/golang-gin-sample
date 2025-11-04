@@ -1,7 +1,0 @@
-commonLabels:
-  app: "etcd-api"
-
-resources:
-  - deployment.yaml
-  - service.yaml
-  - ingress.yaml

@@ -1,4 +1,4 @@
-module golang-gin-sample
+module github.com/fancyshenmue/golang-gin-sample
 
 go 1.16
 
@@ -25,8 +25,14 @@ require (
 	github.com/swaggo/gin-swagger v1.3.1
 	github.com/swaggo/swag v1.7.1
 	go.etcd.io/etcd v3.3.25+incompatible
+	go.etcd.io/etcd/client/v3 v3.5.0
 	go.mongodb.org/mongo-driver v1.7.1
 	go.uber.org/zap v1.19.0 // indirect
 	golang.org/x/net v0.0.0-20210813160813-60bc85c4be6d
 	google.golang.org/grpc v1.40.0 // indirect
+)
+
+replace (
+	github.com/coreos/bbolt => go.etcd.io/bbolt v1.3.6
+	github.com/docker/docker/api => github.com/moby/moby/api v0.0.0-20201216192419-e9a6d0f0e1e5
 )
